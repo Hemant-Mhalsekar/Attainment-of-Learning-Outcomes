@@ -1,11 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Attainment of Learning Outcomes </title>
+    <link rel="icon" type="image/x-icon" href="img/DMClogoicon.ico">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+  <script src="script.js" defer></script>
 </head>
+
 <body>
-    
+    <div id="toast"
+    class="hidden fixed flex items-center w-full max-w-xs p-4 space-x-4 text-white bg-red-500 divide-x divide-gray-200 rounded-lg shadow top-5 right-5 dark:text-gray-400 dark:divide-gray-700 space-x dark:bg-gray-800 fade-in-right"
+    role="alert">
+    Toast Message
+  </div>
+  <div class="flex justify-center">
+    <img src="img/LogoHeader.png" alt="DMCLogoHeader" class="w-1/2 mx-auto">
+  </div>
+  <div class="flex justify-center items-center my-8">
+    <h1 class="font-bold uppercase text-4xl text-black mb-4">Attainment Of Course & Program Outcome</h1>
+  </div>
+
+  <div>
+ 
+    <div class="flex justify-center items-center min-h-screen" id="entireform">
+      <div class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white">
+        <div class="flex justify-center items-center">
+          <h1 class="font-bold uppercase text-5xl">Course Details</h1>
+        </div><br><br>
+        <label style="display: inline; font-size: 16px">
+          <img src="img/icons8-info-24.png" alt="Information" style="display: inline; vertical-align: middle;">
+          Enter course details
+        </label><br>
+        <form id="courseForm">
+          <div class="grid gap-5 md:grid-cols-2 mt-5">
+            <div>
+              <label for="courseName">1. Name of Course:</label>
+              <input
+                class="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text" id="courseName" name="courseName" required placeholder="Ex. BCA"
+                oninput="validateTextInput(this)" />
+            </div>
+            <div>
+              <label for="category">2. Name of category:</label>
+              <input
+                class="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text" id="category" name="category" required placeholder="Ex. "
+                oninput="validateTextInput(this)" />
+            </div>
+            <div>
+              <label for="courseTeacher">3. Name of the Course Teacher:</label>
+              <input
+                class="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text" id="courseTeacher" name="courseTeacher" required placeholder="Ex. Krishnarao Rane"
+                oninput="validateTextInput(this)" />
+            </div>
+
+            <div>
+              <label for="className">4. Name of the class:</label>
+              <input
+                class="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text" id="className" name="className" required placeholder="Ex."
+                oninput="validateTextInput(this)" />
+            </div>
+
+            <div>
+              <label for="totalStudents">5. Number of Students:</label>
+              <input
+                class="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text" id="totalStudents" name="totalStudents" required placeholder="Ex. 60"
+                onkeydown="checkEnter(event)" />
+            </div>
+          
+            <div>
+              <label for="targetPercentage">6. Total Marks:</label>
+              <input
+                class="w-full bg-gray-100 text-gray-900 mt-2 p-3 rounded-lg focus:outline-none focus:shadow-outline"
+                type="text" id="targetPercentage" name="targetPercentage" required placeholder="Ex. 80"
+                oninput="validateNumberInput(this)" />
+            </div>
+
+
+          </div>
+          <div class="my-2 w-1/2 lg:w-1/4 mx-auto">
+            <button
+              class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline"
+              type="submit">
+              Confirm
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--Table to enter marks of learning outcome-->
+
+  <div>
+    <div class="flex justify-center items-center min-h-screen" id="entireform">
+      <div class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white">
+        <div class="flex justify-center items-center">
+          <h1 class="font-bold uppercase text-5xl">Learning Details</h1>
+        </div><br><br>
+        <label style="display: inline; font-size: 16px">
+          <img src="img/icons8-info-24.png" alt="Information" style="display: inline; vertical-align: middle;">
+          Enter learning details
+        </label><br>
+        <form id="courseForm">
+          <div class="grid gap-5 md:grid-cols-2 mt-5">
+            <table class="w-full">
+              <thead>
+                <tr>
+                  <th class="text-left">Learning Outcome</th>
+                  <th class="text-left">Marks Allotted</th>
+                  <th class="text-left">Percentage</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Remembering</td>
+                  <td><input type="text" class="w-full p-2 border border-gray-300"></td>
+                  <td><input type="text" class="w-full p-2 border border-gray-300"></td>
+                </tr>
+                <tr>
+                  <td>Understanding</td>
+                  <td><input type="text" class="w-full p-2 border border-gray-300"></td>
+                  <td><input type="text" class="w-full p-2 border border-gray-300"></td>
+                </tr>
+                <tr>
+                  <td>Applying</td>
+                  <td><input type="text" class="w-full p-2 border border-gray-300"></td>
+                  <td><input type="text" class="w-full p-2 border border-gray-300"></td>
+                </tr>
+                <tr>
+                  <td>Analyze/Evaluate</td>
+                  <td><input type="text" class="w-full p-2 border border-gray-300"></td>
+                  <td><input type="text" class="w-full p-2 border border-gray-300"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="my-2 w-1/2 lg:w-1/4 mx-auto">
+            <button
+              class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline"
+              type="submit">
+              Confirm
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+<!--Table to enter marks of learning outcome ends here--> 
+
 </body>
 </html>
