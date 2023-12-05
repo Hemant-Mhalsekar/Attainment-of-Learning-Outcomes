@@ -3,6 +3,7 @@ let totalMarks; // Variable to store the total marks from the first form
 
 var percentageArray = Array.from({ length: 4 }, () => []);
 let inputValues = [];
+let myCharts = [];
 
 // Function to display form data
 function displayFormData() {
@@ -316,6 +317,45 @@ function trackCount() {
     }
   }
   console.log("Count ", counts);
+  generatePieCharts(counts);
+}
+
+function generatePieCharts(counts) {
+  myCharts.forEach((chart) => chart.destroy());
+  myCharts = [];
+
+  // Create pie charts for each column
+  for (let i = 0; i < counts.length; i++) {
+    const canvasId = `column${i + 1}Chart`;
+    const ctx = document.getElementById(canvasId).getContext("2d");
+
+    const newChart = new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: ["0-40%", "41-60%", "61-80%", "81-100%"],
+        datasets: [
+          {
+            data: counts[i],
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.8)",
+              "rgba(54, 162, 235, 0.8)",
+              "rgba(255, 206, 86, 0.8)",
+              "rgba(75, 192, 192, 0.8)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        title: {
+          display: true,
+          text: `Column ${i + 1} Chart`,
+        },
+      },
+    });
+    myCharts.push(newChart);
+  }
 }
 
 function showToast(message, duration = 3000) {
