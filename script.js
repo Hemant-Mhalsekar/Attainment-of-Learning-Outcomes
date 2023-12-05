@@ -1,7 +1,8 @@
 // Function to handle form submission
 let inputValues = [];
 var refreshCount = 0;
-let counts = [0, 0, 0, 0];
+
+var percentageArray = Array.from({ length: 4 }, () => []);
 
 function SubmitForm2(e) {
   e.preventDefault();
@@ -117,7 +118,6 @@ function handleFileUpload() {
 
                 if (columnArray.length === 4) {
                   var columnNumber = (colIndex - 3) / 2 + 1;
-                  console.log("column Number" + columnNumber);
 
                   this.setAttribute("data-previous-value", enteredValue);
 
@@ -149,19 +149,31 @@ function handleFileUpload() {
 
                     if (!isNaN(percentage)) {
                       // Increment the count based on the percentage range
-                      if (percentage >= 0 && percentage <= 40) {
-                        counts[0]++; // Increment count for 0-40% range
-                      } else if (percentage >= 41 && percentage <= 60) {
-                        counts[1]++; // Increment count for 41-60% range
-                      } else if (percentage >= 61 && percentage <= 80) {
-                        counts[2]++; // Increment count for 61-80% range
-                      } else if (percentage >= 81 && percentage <= 100) {
-                        counts[3]++; // Increment count for 81-100% range
+
+                      var existingIndex = percentageArray[
+                        columnNumber - 1
+                      ].findIndex(
+                        (item) =>
+                          item.rowIndex === rowIndex &&
+                          item.colIndex === colIndex
+                      );
+
+                      if (existingIndex !== -1) {
+                        // Replace the existing percentage value in the array
+                        percentageArray[columnNumber - 1][
+                          existingIndex
+                        ].percentage = percentage;
+                      } else {
+                        // Push an object containing rowIndex, colIndex, and percentage
+                        percentageArray[columnNumber - 1].push({
+                          rowIndex: rowIndex,
+                          colIndex: colIndex,
+                          percentage: percentage,
+                        });
                       }
+                      trackCount();
                     }
 
-                    console.log("Counts for each range:", counts);
-                    // Set the percentage value in the next cell of the same row
                     var percentageCellIndex = colIndex + 1;
                     var percentageCell =
                       rows[rowIndex].cells[percentageCellIndex];
@@ -201,6 +213,40 @@ function handleFileUpload() {
   };
 
   reader.readAsArrayBuffer(file);
+}
+
+function trackCount() {
+  var counts = [
+    [0, 0, 0, 0], // Counts for column 1: [0-40%, 41-60%, 61-80%, 81-100%]
+    [0, 0, 0, 0], // Counts for column 2
+    [0, 0, 0, 0], // Counts for column 3
+    [0, 0, 0, 0], // Counts for column 4
+  ];
+
+  for (
+    let columnIndex = 0;
+    columnIndex < percentageArray.length;
+    columnIndex++
+  ) {
+    let columnPercentages = percentageArray[columnIndex];
+
+    // Iterate through the percentageArray for the current column
+    for (let i = 0; i < columnPercentages.length; i++) {
+      let percentage = columnPercentages[i].percentage;
+
+      // Increment the count based on the percentage range
+      if (percentage >= 0 && percentage <= 40) {
+        counts[columnIndex][0]++; // Increment count for 0-40% range
+      } else if (percentage >= 41 && percentage <= 60) {
+        counts[columnIndex][1]++; // Increment count for 41-60% range
+      } else if (percentage >= 61 && percentage <= 80) {
+        counts[columnIndex][2]++; // Increment count for 61-80% range
+      } else if (percentage >= 81 && percentage <= 100) {
+        counts[columnIndex][3]++; // Increment count for 81-100% range
+      }
+    }
+  }
+  console.log("Count ", counts);
 }
 
 function showToast(message, duration = 3000) {
