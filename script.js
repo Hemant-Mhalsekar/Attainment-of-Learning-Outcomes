@@ -1,6 +1,9 @@
 var refreshCount = 0;
 let totalMarks; // Variable to store the total marks from the first form
 
+var percentageArray = Array.from({ length: 4 }, () => []);
+let inputValues = [];
+
 // Function to display form data
 function displayFormData() {
   let formDataDisplay = document.getElementById("formDataDisplay");
@@ -11,12 +14,24 @@ function displayFormData() {
     // Get input values directly and display them
     formDataDisplay.innerHTML += `
       <div class="mb-4 p-4 bg-white rounded-lg">
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("courseName").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("category").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("courseTeacher").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("className").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("totalStudents").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("targetPercentage").value}</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("courseName").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("category").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("courseTeacher").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("className").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("totalStudents").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("targetPercentage").value
+        }</p>
       </div>`;
 
     // Show the form data display
@@ -25,7 +40,7 @@ function displayFormData() {
 }
 
 function SubmitForm2(event) {
-  event.preventDefault()
+  event.preventDefault();
 
   // Get input values
   let cell1Value = parseInt(document.getElementById("cell1").value, 10);
@@ -34,7 +49,10 @@ function SubmitForm2(event) {
   let cell4Value = parseInt(document.getElementById("cell4").value, 10);
 
   // Calculate the total marks from the first form
-  let totalMarks = parseInt(document.getElementById("targetPercentage").value, 10);
+  let totalMarks = parseInt(
+    document.getElementById("targetPercentage").value,
+    10
+  );
 
   // Calculate the sum of marks entered in the second form
   let sumOfMarks = cell1Value + cell2Value + cell3Value + cell4Value;
@@ -67,10 +85,9 @@ function updatePercentageCell(cellId, percentageId, marks, totalMarks) {
     let percentage = (enteredValue / totalMarks) * 100;
 
     // Display the percentage in the corresponding cell
-    percentageCell.value = isNaN(percentage) ? '' : percentage.toFixed(2) + "%";
+    percentageCell.value = isNaN(percentage) ? "" : percentage.toFixed(2) + "%";
   }
 }
-
 
 function handleFileUpload() {
   var fileInput = document.getElementById("fileInput");
