@@ -1,11 +1,31 @@
-// Function to handle form submission
-let inputValues = [];
 var refreshCount = 0;
+let totalMarks; // Variable to store the total marks from the first form
 
-var percentageArray = Array.from({ length: 4 }, () => []);
+// Function to display form data
+function displayFormData() {
+  let formDataDisplay = document.getElementById("formDataDisplay");
+  if (formDataDisplay) {
+    // Clear existing form data display
+    formDataDisplay.innerHTML = "";
 
-function SubmitForm2(e) {
-  e.preventDefault();
+    // Get input values directly and display them
+    formDataDisplay.innerHTML += `
+      <div class="mb-4 p-4 bg-white rounded-lg">
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("courseName").value}</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("category").value}</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("courseTeacher").value}</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("className").value}</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("totalStudents").value}</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("targetPercentage").value}</p>
+      </div>`;
+
+    // Show the form data display
+    formDataDisplay.style.display = "block";
+  }
+}
+
+function SubmitForm2(event) {
+  event.preventDefault()
 
   // Get input values
   let cell1Value = parseInt(document.getElementById("cell1").value, 10);
@@ -13,12 +33,44 @@ function SubmitForm2(e) {
   let cell3Value = parseInt(document.getElementById("cell3").value, 10);
   let cell4Value = parseInt(document.getElementById("cell4").value, 10);
 
-  // Assign cell values to respective indices in the inputValues array
-  inputValues = [cell1Value, cell2Value, cell3Value, cell4Value];
+  // Calculate the total marks from the first form
+  let totalMarks = parseInt(document.getElementById("targetPercentage").value, 10);
 
-  // Display object of input values (for demonstration purposes)
-  console.log("Input Values:", inputValues);
+  // Calculate the sum of marks entered in the second form
+  let sumOfMarks = cell1Value + cell2Value + cell3Value + cell4Value;
+
+  // Validate that the sum of marks does not exceed the total marks
+  if (sumOfMarks > totalMarks) {
+    // Display an error message or take appropriate action
+    showToast("Sum of marks cannot exceed total marks", 5000);
+  } else {
+    // Calculate percentages and update the corresponding cells
+    updatePercentageCell("cell1", "percentage1", cell1Value, totalMarks);
+    updatePercentageCell("cell2", "percentage2", cell2Value, totalMarks);
+    updatePercentageCell("cell3", "percentage3", cell3Value, totalMarks);
+    updatePercentageCell("cell4", "percentage4", cell4Value, totalMarks);
+
+    // Continue with processing the form data
+    inputValues = [cell1Value, cell2Value, cell3Value, cell4Value];
+
+    // Display object of input values (for demonstration purposes)
+    console.log("Input Values:", inputValues);
+  }
 }
+
+function updatePercentageCell(cellId, percentageId, marks, totalMarks) {
+  let marksCell = document.getElementById(cellId);
+  let percentageCell = document.getElementById(percentageId);
+
+  if (marksCell && percentageCell) {
+    let enteredValue = parseInt(marksCell.value, 10);
+    let percentage = (enteredValue / totalMarks) * 100;
+
+    // Display the percentage in the corresponding cell
+    percentageCell.value = isNaN(percentage) ? '' : percentage.toFixed(2) + "%";
+  }
+}
+
 
 function handleFileUpload() {
   var fileInput = document.getElementById("fileInput");
