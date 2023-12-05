@@ -31,10 +31,7 @@
     </div>
 
     <div>
-      <div
-        class="flex justify-center items-center min-h-screen"
-        id="entireform"
-      >
+      <div class="flex justify-center items-center" id="entireform">
         <div
           class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto shadow-2xl rounded-2xl bg-white"
         >
@@ -61,7 +58,6 @@
                   name="courseName"
                   required
                   placeholder="Ex. BCA"
-                  oninput="validateTextInput(this)"
                 />
               </div>
               <div>
@@ -73,7 +69,6 @@
                   name="category"
                   required
                   placeholder="Ex. "
-                  oninput="validateTextInput(this)"
                 />
               </div>
               <div>
@@ -87,7 +82,6 @@
                   name="courseTeacher"
                   required
                   placeholder="Ex. Krishnarao Rane"
-                  oninput="validateTextInput(this)"
                 />
               </div>
 
@@ -100,7 +94,6 @@
                   name="className"
                   required
                   placeholder="Ex."
-                  oninput="validateTextInput(this)"
                 />
               </div>
 
@@ -113,7 +106,6 @@
                   name="totalStudents"
                   required
                   placeholder="Ex. 60"
-                  onkeydown="checkEnter(event)"
                 />
               </div>
 
@@ -126,14 +118,14 @@
                   name="targetPercentage"
                   required
                   placeholder="Ex. 80"
-                  oninput="validateNumberInput(this)"
                 />
               </div>
             </div>
             <div class="my-2 w-1/2 lg:w-1/4 mx-auto">
               <button
-                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline"
-                type="submit"
+                onclick="displayFormData()"
+                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline mt-5"
+                type="button"
               >
                 Confirm
               </button>
@@ -143,13 +135,18 @@
       </div>
     </div>
 
+    <div
+      id="formDataDisplay"
+      class="hidden w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto shadow-2xl rounded-2xl bg-white"
+    >
+      <!-- Display form data here -->
+    </div>
+
     <!--Table to enter marks of learning outcome-->
 
     <div>
-      <div class="flex justify-center items-center min-h-screen" id="form2">
-        <div
-          class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white"
-        >
+      <div class="flex justify-center items-center" id="form2">
+        <div class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white">
           <div class="flex justify-center items-center">
             <h1 class="font-bold uppercase text-5xl">Learning Details</h1>
           </div>
@@ -160,80 +157,94 @@
               alt="Information"
               style="display: inline; vertical-align: middle"
             />
-            Enter learning details </label
-          ><br />
+            Enter learning details
+          </label><br />
           <form id="Form2">
-            <div class="grid gap-5 md:grid-cols-2 mt-5">
-              <table class="w-full">
+            <div class="w-full grid gap-5 mt-5">
+              <table class="w-full bg-white rounded-lg overflow-hidden shadow-md">
                 <thead>
                   <tr>
-                    <th class="text-left">Learning Outcome</th>
-                    <th class="text-left">Marks Allotted</th>
-                    <th class="text-left">Percentage</th>
+                    <th class="py-2 px-4 text-left bg-gray-800 text-white">
+                      Learning Outcome
+                    </th>
+                    <th class="py-2 px-4 text-left bg-gray-800 text-white">
+                      Marks Allotted
+                    </th>
+                    <th class="py-2 px-4 text-left bg-gray-800 text-white">
+                      Percentage
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Remembering</td>
-                    <td>
+                    <td class="py-2 px-4">Remembering</td>
+                    <td class="py-2 px-4">
                       <input
                         type="text"
                         class="w-full p-2 border border-gray-300"
                         id="cell1"
                       />
                     </td>
-                    <td>
+                    <td class="py-2 px-4">
                       <input
                         type="text"
                         class="w-full p-2 border border-gray-300"
+                        id="percentage1"
+                        disabled 
                       />
                     </td>
                   </tr>
                   <tr>
-                    <td>Understanding</td>
-                    <td>
+                    <td class="py-2 px-4">Understanding</td>
+                    <td class="py-2 px-4">
                       <input
                         type="text"
                         class="w-full p-2 border border-gray-300"
                         id="cell2"
                       />
                     </td>
-                    <td>
+                    <td class="py-2 px-4">
                       <input
                         type="text"
                         class="w-full p-2 border border-gray-300"
+                        id="percentage2"
+                        disabled 
                       />
                     </td>
                   </tr>
                   <tr>
-                    <td>Applying</td>
-                    <td>
+                    <td class="py-2 px-4">Applying</td>
+                    <td class="py-2 px-4">
                       <input
                         type="text"
                         class="w-full p-2 border border-gray-300"
                         id="cell3"
                       />
                     </td>
-                    <td>
+                    <td class="py-2 px-4">
                       <input
                         type="text"
                         class="w-full p-2 border border-gray-300"
+                        id="percentage3"
+                        disabled 
                       />
                     </td>
                   </tr>
                   <tr>
-                    <td>Analyze/Evaluate</td>
-                    <td>
+                    <td class="py-2 px-4">Analyze/Evaluate</td>
+                    <td class="py-2 px-4">
                       <input
                         type="text"
                         class="w-full p-2 border border-gray-300"
                         id="cell4"
                       />
                     </td>
-                    <td>
+                    <td class="py-2 px-4">
                       <input
                         type="text"
                         class="w-full p-2 border border-gray-300"
+                        id="percentage4"
+                        disabled 
                       />
                     </td>
                   </tr>
@@ -242,7 +253,7 @@
             </div>
             <div class="my-2 w-1/2 lg:w-1/4 mx-auto">
               <button
-                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline"
+                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline mt-5"
                 onclick="SubmitForm2(event)"
               >
                 Confirm
@@ -252,6 +263,7 @@
         </div>
       </div>
     </div>
+    
 
     <div
       id="ExcelInput"
