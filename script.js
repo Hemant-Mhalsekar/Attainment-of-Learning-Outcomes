@@ -23,7 +23,7 @@ function displayFormData() {
     totalStudents === "" ||
     targetPercentage === ""
   ) {
-    alert("Please fill in all the required fields");
+    showToast("Please fill in all the required fields", 5000);
     return;
   }
 
