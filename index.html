@@ -137,8 +137,7 @@
 
     <div
       id="formDataDisplay"
-      class="hidden w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto shadow-2xl rounded-2xl bg-white"
-    >
+      class="hidden w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto shadow-2xl rounded-2xl bg-white">
       <!-- Display form data here -->
     </div>
 
@@ -255,7 +254,7 @@
             </div>
             <div class="my-2 w-1/2 lg:w-1/4 mx-auto">
               <button
-                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline mt-5 hover:bg-blue-700"
+                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline mt-5 hover:bg-blue-700" id="confirm2"
                 onclick="SubmitForm2(event)"
               >
                 Confirm
@@ -282,8 +281,7 @@
         <button
           id="loadButton"
           class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-r-lg focus:outline-none"
-          onclick="handleFileUpload()"
-        >
+          onclick="handleFileUpload(); showPrintButton()">
           Load Excel
         </button>
       </div>
@@ -336,7 +334,74 @@
     <!--Table to enter marks of learning outcome ends here-->
 
 
+   <!--Print Block-->
 
+    <div id="printButtonContainer" class="flex justify-center items-center my-4">
+      <button id="printButton"
+        class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-max focus:outline-none focus:shadow-outline"
+        hidden>
+        Print Report <!-- changed from Print page -->
+      </button>
+    </div>
+
+    <script>
+      // Function to handle the printing
+      function printPage() {
+        // Hide elements that you want to exclude from printing
+        document.getElementById('entireform').style.display = 'none';
+        document.getElementById('toast').style.display = 'none';
+        document.getElementById('ExcelInput').style.display = 'none';
+        document.getElementById('confirm2').style.display = 'none';
+        document.getElementById('printButton').style.display = 'none';
+    
+        // Create a container for the signatures
+        const signaturesContainer = document.createElement('div');
+        signaturesContainer.style.textAlign = 'center';
+        signaturesContainer.style.marginTop = '50px';
+        signaturesContainer.className = 'print-only'; // Add a CSS class for printing
+    
+        // Create the Teacher Incharge signature
+        const teacherSignature = document.createElement('div');
+        teacherSignature.style.display = 'inline-block';
+        teacherSignature.style.marginRight = '309px'; // Increase the margin-right for more distance
+        teacherSignature.innerHTML = `<div style="border-top: 2px solid #000;">Faculty</div>`;
+    
+        // Create the Principal signature
+        const principalSignature = document.createElement('div');
+        principalSignature.style.display = 'inline-block';
+        principalSignature.innerHTML = `<div style="border-top: 2px solid #000;">Principal</div>`;
+    
+        // Append signatures to the container
+        signaturesContainer.appendChild(teacherSignature);
+        signaturesContainer.appendChild(principalSignature);
+    
+        // Append the signatures container to the body
+        document.body.appendChild(signaturesContainer);
+    
+        // Trigger the print dialog
+        window.print();
+    
+        // Remove the signatures container after printing
+        document.body.removeChild(signaturesContainer);
+    
+        // Restore the hidden elements after printing
+        document.getElementById('entireform').style.display = 'block';
+        document.getElementById('ExcelInput').style.display = 'block';
+        document.getElementById('confirm2').style.display = 'block';
+        document.getElementById('printButton').style.display = 'block';
+      }
+    
+      // Attach the printPage function to the print button
+      document.getElementById('printButton').addEventListener('click', printPage);
+    
+      // Add an event listener to the "Print Page" button to re-invoke the printing process
+      document.getElementById('printButton').addEventListener('click', function () {
+        // Hide the "Print Page" button before printing
+        this.style.display = 'none';
+        printPage();
+      });
+    </script>
+    
 
     <!--Print button code-->
   </body>

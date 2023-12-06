@@ -408,3 +408,23 @@ function showToast(message, duration = 3000) {
     }, duration);
   }
 }
+
+
+
+
+///Print code
+// Disable page reload
+window.addEventListener("beforeunload", function (e) {
+  e.preventDefault();
+  e.returnValue = "Are you sure you want to leave this page?";
+});
+
+//new
+// Function to show the "Print Page" button
+function showPrintButton() {
+  const printButton = document.getElementById("printButton");
+  printButton.removeAttribute("hidden");
+}
+
+// Attach the printPage function to the print button
+document.getElementById("printButton").addEventListener("click", printPage);
