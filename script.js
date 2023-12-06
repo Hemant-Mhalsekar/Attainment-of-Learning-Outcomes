@@ -220,27 +220,12 @@ function handleFileUpload() {
                     if (!isNaN(percentage)) {
                       // Increment the count based on the percentage range
 
-                      var existingIndex = percentageArray[
-                        columnNumber - 1
-                      ].findIndex(
-                        (item) =>
-                          item.rowIndex === rowIndex &&
-                          item.colIndex === colIndex
+                      trackPercentage(
+                        colIndex,
+                        rowIndex,
+                        percentage,
+                        columnNumber
                       );
-
-                      if (existingIndex !== -1) {
-                        // Replace the existing percentage value in the array
-                        percentageArray[columnNumber - 1][
-                          existingIndex
-                        ].percentage = percentage;
-                      } else {
-                        // Push an object containing rowIndex, colIndex, and percentage
-                        percentageArray[columnNumber - 1].push({
-                          rowIndex: rowIndex,
-                          colIndex: colIndex,
-                          percentage: percentage,
-                        });
-                      }
                       trackCount();
                     }
 
@@ -284,7 +269,26 @@ function handleFileUpload() {
 
   reader.readAsArrayBuffer(file);
 }
+//Function to store all percentage in array
+function trackPercentage(colIndex, rowIndex, percentage, columnNumber) {
+  var existingIndex = percentageArray[columnNumber - 1].findIndex(
+    (item) => item.rowIndex === rowIndex && item.colIndex === colIndex
+  );
 
+  if (existingIndex !== -1) {
+    // Replace the existing percentage value in the array
+    percentageArray[columnNumber - 1][existingIndex].percentage = percentage;
+  } else {
+    // Push an object containing rowIndex, colIndex, and percentage
+    percentageArray[columnNumber - 1].push({
+      rowIndex: rowIndex,
+      colIndex: colIndex,
+      percentage: percentage,
+    });
+  }
+}
+
+//Function to keep track of students between [0-40%, 41-60%, 61-80%, 81-100%]
 function trackCount() {
   var counts = [
     [0, 0, 0, 0], // Counts for column 1: [0-40%, 41-60%, 61-80%, 81-100%]
@@ -320,7 +324,9 @@ function trackCount() {
   generatePieCharts(counts);
 }
 
+//function to generate pie chart
 function generatePieCharts(counts) {
+  document.getElementById("piechart").classList.remove("hidden");
   myCharts.forEach((chart) => chart.destroy());
   myCharts = [];
 
@@ -358,6 +364,7 @@ function generatePieCharts(counts) {
   }
 }
 
+//Display Toast message
 function showToast(message, duration = 3000) {
   const toast = document.getElementById("toast");
   if (toast) {
