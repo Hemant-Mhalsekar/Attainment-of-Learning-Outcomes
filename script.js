@@ -7,6 +7,26 @@ let myCharts = [];
 
 // Function to display form data
 function displayFormData() {
+  // Validation
+  var courseName = document.getElementById("courseName").value;
+  var category = document.getElementById("category").value;
+  var courseTeacher = document.getElementById("courseTeacher").value;
+  var className = document.getElementById("className").value;
+  var totalStudents = document.getElementById("totalStudents").value;
+  var targetPercentage = document.getElementById("targetPercentage").value;
+
+  if (
+    courseName === "" ||
+    category === "" ||
+    courseTeacher === "" ||
+    className === "" ||
+    totalStudents === "" ||
+    targetPercentage === ""
+  ) {
+    alert("Please fill in all the required fields");
+    return;
+  }
+
   let formDataDisplay = document.getElementById("formDataDisplay");
   if (formDataDisplay) {
     // Clear existing form data display
