@@ -1,6 +1,10 @@
 var refreshCount = 0;
 let totalMarks; // Variable to store the total marks from the first form
 
+var percentageArray = Array.from({ length: 4 }, () => []);
+let inputValues = [];
+let myCharts = [];
+
 // Function to display form data
 function displayFormData() {
   let formDataDisplay = document.getElementById("formDataDisplay");
@@ -11,12 +15,24 @@ function displayFormData() {
     // Get input values directly and display them
     formDataDisplay.innerHTML += `
       <div class="mb-4 p-4 bg-white rounded-lg">
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("courseName").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("category").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("courseTeacher").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("className").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("totalStudents").value}</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${document.getElementById("targetPercentage").value}</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("courseName").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("category").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("courseTeacher").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("className").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("totalStudents").value
+        }</p>
+        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+          document.getElementById("targetPercentage").value
+        }</p>
       </div>`;
 
     // Show the form data display
@@ -25,7 +41,7 @@ function displayFormData() {
 }
 
 function SubmitForm2(event) {
-  event.preventDefault()
+  event.preventDefault();
 
   // Get input values
   let cell1Value = parseInt(document.getElementById("cell1").value, 10);
@@ -34,7 +50,10 @@ function SubmitForm2(event) {
   let cell4Value = parseInt(document.getElementById("cell4").value, 10);
 
   // Calculate the total marks from the first form
-  let totalMarks = parseInt(document.getElementById("targetPercentage").value, 10);
+  let totalMarks = parseInt(
+    document.getElementById("targetPercentage").value,
+    10
+  );
 
   // Calculate the sum of marks entered in the second form
   let sumOfMarks = cell1Value + cell2Value + cell3Value + cell4Value;
@@ -67,10 +86,9 @@ function updatePercentageCell(cellId, percentageId, marks, totalMarks) {
     let percentage = (enteredValue / totalMarks) * 100;
 
     // Display the percentage in the corresponding cell
-    percentageCell.value = isNaN(percentage) ? '' : percentage.toFixed(2) + "%";
+    percentageCell.value = isNaN(percentage) ? "" : percentage.toFixed(2) + "%";
   }
 }
-
 
 function handleFileUpload() {
   var fileInput = document.getElementById("fileInput");
@@ -202,27 +220,12 @@ function handleFileUpload() {
                     if (!isNaN(percentage)) {
                       // Increment the count based on the percentage range
 
-                      var existingIndex = percentageArray[
-                        columnNumber - 1
-                      ].findIndex(
-                        (item) =>
-                          item.rowIndex === rowIndex &&
-                          item.colIndex === colIndex
+                      trackPercentage(
+                        colIndex,
+                        rowIndex,
+                        percentage,
+                        columnNumber
                       );
-
-                      if (existingIndex !== -1) {
-                        // Replace the existing percentage value in the array
-                        percentageArray[columnNumber - 1][
-                          existingIndex
-                        ].percentage = percentage;
-                      } else {
-                        // Push an object containing rowIndex, colIndex, and percentage
-                        percentageArray[columnNumber - 1].push({
-                          rowIndex: rowIndex,
-                          colIndex: colIndex,
-                          percentage: percentage,
-                        });
-                      }
                       trackCount();
                     }
 
@@ -266,7 +269,26 @@ function handleFileUpload() {
 
   reader.readAsArrayBuffer(file);
 }
+//Function to store all percentage in array
+function trackPercentage(colIndex, rowIndex, percentage, columnNumber) {
+  var existingIndex = percentageArray[columnNumber - 1].findIndex(
+    (item) => item.rowIndex === rowIndex && item.colIndex === colIndex
+  );
 
+  if (existingIndex !== -1) {
+    // Replace the existing percentage value in the array
+    percentageArray[columnNumber - 1][existingIndex].percentage = percentage;
+  } else {
+    // Push an object containing rowIndex, colIndex, and percentage
+    percentageArray[columnNumber - 1].push({
+      rowIndex: rowIndex,
+      colIndex: colIndex,
+      percentage: percentage,
+    });
+  }
+}
+
+//Function to keep track of students between [0-40%, 41-60%, 61-80%, 81-100%]
 function trackCount() {
   var counts = [
     [0, 0, 0, 0], // Counts for column 1: [0-40%, 41-60%, 61-80%, 81-100%]
@@ -299,8 +321,50 @@ function trackCount() {
     }
   }
   console.log("Count ", counts);
+  generatePieCharts(counts);
 }
 
+//function to generate pie chart
+function generatePieCharts(counts) {
+  document.getElementById("piechart").classList.remove("hidden");
+  myCharts.forEach((chart) => chart.destroy());
+  myCharts = [];
+
+  // Create pie charts for each column
+  for (let i = 0; i < counts.length; i++) {
+    const canvasId = `column${i + 1}Chart`;
+    const ctx = document.getElementById(canvasId).getContext("2d");
+
+    const newChart = new Chart(ctx, {
+      type: "pie",
+      data: {
+        labels: ["0-40%", "41-60%", "61-80%", "81-100%"],
+        datasets: [
+          {
+            data: counts[i],
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.8)",
+              "rgba(54, 162, 235, 0.8)",
+              "rgba(255, 206, 86, 0.8)",
+              "rgba(75, 192, 192, 0.8)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: false,
+        title: {
+          display: true,
+          text: `Column ${i + 1} Chart`,
+        },
+      },
+    });
+    myCharts.push(newChart);
+  }
+}
+
+//Display Toast message
 function showToast(message, duration = 3000) {
   const toast = document.getElementById("toast");
   if (toast) {

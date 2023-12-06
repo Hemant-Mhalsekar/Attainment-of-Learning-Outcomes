@@ -8,7 +8,7 @@
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css"
       rel="stylesheet"
     />
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="script.js" defer></script>
   </head>
@@ -146,7 +146,9 @@
 
     <div>
       <div class="flex justify-center items-center" id="form2">
-        <div class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white">
+        <div
+          class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white"
+        >
           <div class="flex justify-center items-center">
             <h1 class="font-bold uppercase text-5xl">Learning Details</h1>
           </div>
@@ -157,11 +159,13 @@
               alt="Information"
               style="display: inline; vertical-align: middle"
             />
-            Enter learning details
-          </label><br />
+            Enter learning details </label
+          ><br />
           <form id="Form2">
             <div class="w-full grid gap-5 mt-5">
-              <table class="w-full bg-white rounded-lg overflow-hidden shadow-md">
+              <table
+                class="w-full bg-white rounded-lg overflow-hidden shadow-md"
+              >
                 <thead>
                   <tr>
                     <th class="py-2 px-4 text-left bg-gray-800 text-white">
@@ -190,7 +194,7 @@
                         type="text"
                         class="w-full p-2 border border-gray-300"
                         id="percentage1"
-                        disabled 
+                        disabled
                       />
                     </td>
                   </tr>
@@ -208,7 +212,7 @@
                         type="text"
                         class="w-full p-2 border border-gray-300"
                         id="percentage2"
-                        disabled 
+                        disabled
                       />
                     </td>
                   </tr>
@@ -226,7 +230,7 @@
                         type="text"
                         class="w-full p-2 border border-gray-300"
                         id="percentage3"
-                        disabled 
+                        disabled
                       />
                     </td>
                   </tr>
@@ -244,7 +248,7 @@
                         type="text"
                         class="w-full p-2 border border-gray-300"
                         id="percentage4"
-                        disabled 
+                        disabled
                       />
                     </td>
                   </tr>
@@ -263,7 +267,6 @@
         </div>
       </div>
     </div>
-    
 
     <div
       id="ExcelInput"
@@ -289,6 +292,48 @@
     </div>
 
     <div class="bg-white p-4 mx-4 my-8 shadow-lg" id="gridView2"></div>
+
+    <div
+      id="piechart"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 justify-items-center my-8 p-4 hidden"
+    >
+      <div class="text-center">
+        <h1 class="font-bold text-xl mb-4">Remembering</h1>
+        <canvas
+          id="column1Chart"
+          class="shadow-2xl rounded-lg p-8"
+          width="300"
+          height="300"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <h1 class="font-bold text-xl mb-4">Understanding</h1>
+        <canvas
+          id="column2Chart"
+          class="shadow-2xl rounded-lg p-8"
+          width="300"
+          height="300"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <h1 class="font-bold text-xl mb-4">Applying</h1>
+        <canvas
+          id="column3Chart"
+          class="shadow-2xl rounded-lg p-8"
+          width="300"
+          height="300"
+        ></canvas>
+      </div>
+      <div class="text-center">
+        <h1 class="font-bold text-xl mb-4">Analyse/Evaluate</h1>
+        <canvas
+          id="column4Chart"
+          class="shadow-2xl rounded-lg p-8"
+          width="300"
+          height="300"
+        ></canvas>
+      </div>
+    </div>
 
     <!--Table to enter marks of learning outcome ends here-->
   </body>
