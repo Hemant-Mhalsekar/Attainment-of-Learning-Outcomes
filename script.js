@@ -38,6 +38,7 @@ function displayFormData() {
     // Show the form data display
     formDataDisplay.style.display = "block";
   }
+  document.getElementById("div2").classList.remove("hidden");
 }
 
 function SubmitForm2(event) {
@@ -75,6 +76,7 @@ function SubmitForm2(event) {
     // Display object of input values (for demonstration purposes)
     console.log("Input Values:", inputValues);
   }
+  document.getElementById("ExcelInput").classList.remove("hidden");
 }
 
 function updatePercentageCell(cellId, percentageId, marks, totalMarks) {
@@ -91,6 +93,7 @@ function updatePercentageCell(cellId, percentageId, marks, totalMarks) {
 }
 
 function handleFileUpload() {
+  document.getElementById("gridView2").classList.remove("hidden");
   var fileInput = document.getElementById("fileInput");
   var gridView2 = document.getElementById("gridView2");
 

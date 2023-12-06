@@ -145,7 +145,7 @@
     <!--Table to enter marks of learning outcome-->
 
     <div>
-      <div class="flex justify-center items-center" id="form2">
+      <div class="flex justify-center items-center hidden" id="div2">
         <div
           class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white"
         >
@@ -163,9 +163,7 @@
           ><br />
           <form id="Form2">
             <div class="w-full grid gap-5 mt-5">
-              <table
-                class="w-full bg-white rounded-lg overflow-hidden shadow-md"
-              >
+              <table class="w-full bg-white rounded-lg overflow-hidden">
                 <thead>
                   <tr>
                     <th class="py-2 px-4 text-left bg-gray-800 text-white">
@@ -257,7 +255,7 @@
             </div>
             <div class="my-2 w-1/2 lg:w-1/4 mx-auto">
               <button
-                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline mt-5"
+                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline mt-5 hover:bg-blue-700"
                 onclick="SubmitForm2(event)"
               >
                 Confirm
@@ -270,7 +268,7 @@
 
     <div
       id="ExcelInput"
-      class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white"
+      class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white hidden"
     >
       <div>
         <h1 class="font-bold uppercase text-3xl">Upload Student Details</h1>
@@ -291,7 +289,7 @@
       </div>
     </div>
 
-    <div class="bg-white p-4 mx-4 my-8 shadow-lg" id="gridView2"></div>
+    <div class="bg-white p-4 mx-4 my-8 shadow-lg hidden" id="gridView2"></div>
 
     <div
       id="piechart"
