@@ -50,33 +50,43 @@ function SubmitForm2(event) {
   let cell3Value = parseInt(document.getElementById("cell3").value, 10);
   let cell4Value = parseInt(document.getElementById("cell4").value, 10);
 
-  // Calculate the total marks from the first form
-  let totalMarks = parseInt(
-    document.getElementById("targetPercentage").value,
-    10
-  );
+  inputValues = [cell1Value, cell2Value, cell3Value, cell4Value];
 
-  // Calculate the sum of marks entered in the second form
-  let sumOfMarks = cell1Value + cell2Value + cell3Value + cell4Value;
+  if (
+    !isNaN(cell1Value) &&
+    !isNaN(cell2Value) &&
+    !isNaN(cell3Value) &&
+    !isNaN(cell4Value)
+  ) {
+    // Calculate the total marks from the first form
+    let totalMarks = parseInt(
+      document.getElementById("targetPercentage").value,
+      10
+    );
 
-  // Validate that the sum of marks does not exceed the total marks
-  if (sumOfMarks > totalMarks) {
-    // Display an error message or take appropriate action
-    showToast("Sum of marks cannot exceed total marks", 5000);
+    // Calculate the sum of marks entered in the second form
+    let sumOfMarks = cell1Value + cell2Value + cell3Value + cell4Value;
+
+    // Validate that the sum of marks does not exceed the total marks
+    if (sumOfMarks > totalMarks) {
+      // Display an error message or take appropriate action
+      showToast("Sum of marks cannot exceed total marks", 5000);
+    } else {
+      // Calculate percentages and update the corresponding cells
+      updatePercentageCell("cell1", "percentage1", cell1Value, totalMarks);
+      updatePercentageCell("cell2", "percentage2", cell2Value, totalMarks);
+      updatePercentageCell("cell3", "percentage3", cell3Value, totalMarks);
+      updatePercentageCell("cell4", "percentage4", cell4Value, totalMarks);
+
+      // Continue with processing the form data
+
+      // Display object of input values (for demonstration purposes)
+      console.log("Input Values:", inputValues);
+    }
+    document.getElementById("ExcelInput").classList.remove("hidden");
   } else {
-    // Calculate percentages and update the corresponding cells
-    updatePercentageCell("cell1", "percentage1", cell1Value, totalMarks);
-    updatePercentageCell("cell2", "percentage2", cell2Value, totalMarks);
-    updatePercentageCell("cell3", "percentage3", cell3Value, totalMarks);
-    updatePercentageCell("cell4", "percentage4", cell4Value, totalMarks);
-
-    // Continue with processing the form data
-    inputValues = [cell1Value, cell2Value, cell3Value, cell4Value];
-
-    // Display object of input values (for demonstration purposes)
-    console.log("Input Values:", inputValues);
+    showToast("Enter all values", 5000);
   }
-  document.getElementById("ExcelInput").classList.remove("hidden");
 }
 
 function updatePercentageCell(cellId, percentageId, marks, totalMarks) {
