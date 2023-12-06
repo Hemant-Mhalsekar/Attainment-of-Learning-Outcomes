@@ -35,22 +35,23 @@ function displayFormData() {
     // Get input values directly and display them
     formDataDisplay.innerHTML += `
       <div class="mb-4 p-4 bg-white rounded-lg">
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <h2 style="font-weight: bold; color: #007bff; font-size: 26px; ;text-decoration: underline; ">Course Information</h2>
+        <p class="mb-2"><span class="font-bold">Name of Course:</span> ${
           document.getElementById("courseName").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Name of category:</span> ${
           document.getElementById("category").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Name of the Course Teacher:</span> ${
           document.getElementById("courseTeacher").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Name of the class:</span> ${
           document.getElementById("className").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Number of Students:</span> ${
           document.getElementById("totalStudents").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Total Marks:</span> ${
           document.getElementById("targetPercentage").value
         }</p>
       </div>`;
