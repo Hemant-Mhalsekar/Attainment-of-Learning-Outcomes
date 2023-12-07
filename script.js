@@ -183,6 +183,7 @@ function handleFileUpload() {
             "<th class='text-center h-10 bg-blue-500'>Applying</th><th class='text-center h-10 bg-blue-500'>%</th>";
           html +=
             "<th class='text-center h-10 bg-blue-500'>Analyse/Evaluate</th><th class='text-center h-10 bg-blue-500'>%</th>";
+          html += "<th class='text-center h-10 bg-blue-500'>Total</th>";
         }
       }
 
@@ -200,7 +201,7 @@ function handleFileUpload() {
     var rows = table.getElementsByTagName("tr");
 
     for (var i = 1; i < rows.length; i++) {
-      for (var j = 3; j < 3 + 4 * 2; j++) {
+      for (var j = 3; j < 3 + 4 * 2 + 1; j++) {
         (function (rowIndex, colIndex) {
           var newCell = document.createElement("td");
           newCell.className = "text-center h-10 border border-gray-300 ";
