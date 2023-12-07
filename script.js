@@ -4,6 +4,7 @@ let totalMarks; // Variable to store the total marks from the first form
 var percentageArray = Array.from({ length: 4 }, () => []);
 let inputValues = [];
 let myCharts = [];
+let myChart = null;
 
 // Function to display form data
 function displayFormData() {
@@ -252,6 +253,16 @@ function handleFileUpload() {
                     // console.log("Percentage : "+percentage);
                     if (percentageCell) {
                       percentageCell.textContent = percentage.toFixed(2) + "%";
+
+                      if (percentage >= 0 && percentage <= 40) {
+                        percentageCell.className = "bg-red-200";
+                      } else if (percentage >= 41 && percentage <= 60) {
+                        percentageCell.className = "bg-blue-200";
+                      } else if (percentage >= 61 && percentage <= 80) {
+                        percentageCell.className = "bg-yellow-200";
+                      } else if (percentage >= 81 && percentage <= 100) {
+                        percentageCell.className = "bg-green-200";
+                      }
                     }
                   }
                 } else {
@@ -265,6 +276,7 @@ function handleFileUpload() {
                 var percentageCell = rows[rowIndex].cells[percentageCellIndex];
                 if (percentageCell) {
                   percentageCell.textContent = "";
+                  percentageCell.className = "bg-white";
                 }
               }
             });
@@ -334,8 +346,37 @@ function trackCount() {
       }
     }
   }
-  console.log("Count ", counts);
+  // console.log("Count ", counts);
   generatePieCharts(counts);
+
+  const columnAverages = calculateColumnWiseAverage();
+  console.log("Column-wise averages:", columnAverages);
+}
+
+function calculateColumnWiseAverage() {
+  const columnAverages = [];
+
+  for (
+    let columnIndex = 0;
+    columnIndex < percentageArray.length;
+    columnIndex++
+  ) {
+    const columnPercentages = percentageArray[columnIndex];
+    let sum = 0;
+
+    // Calculate sum of percentages for the current column
+    columnPercentages.forEach((item) => {
+      sum += item.percentage;
+    });
+
+    // Calculate average for the current column
+    const columnAverage =
+      columnPercentages.length > 0 ? sum / columnPercentages.length : 0;
+
+    // Push the average for the current column into the array
+    columnAverages.push(columnAverage);
+  }
+  generateBarGraph(columnAverages);
 }
 
 //function to generate pie chart
@@ -376,6 +417,65 @@ function generatePieCharts(counts) {
     });
     myCharts.push(newChart);
   }
+}
+function generateBarGraph(columnAverages) {
+  const canvas = document.getElementById("barGraph");
+
+  // Remove inline styles from the canvas element
+  canvas.removeAttribute("style");
+
+  // Set the width and height of the canvas element
+  canvas.style.width = 500;
+  canvas.style.height = 200;
+
+  // Destroy previous chart instance if it exists
+  if (myChart) {
+    myChart.destroy();
+  }
+
+  const ctx = canvas.getContext("2d");
+
+  myChart = new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: [
+        "Remembering",
+        "Understanding",
+        "Application",
+        "Analyse/Evaluate",
+      ],
+      datasets: [
+        {
+          label: "Percentage Average",
+          data: columnAverages,
+          backgroundColor: [
+            "rgba(255, 99, 132, 0.5)",
+            "rgba(54, 162, 235, 0.5)",
+            "rgba(255, 206, 86, 0.5)",
+            "rgba(75, 192, 192, 0.5)",
+          ],
+          borderColor: [
+            "rgba(255, 99, 132, 1)",
+            "rgba(54, 162, 235, 1)",
+            "rgba(255, 206, 86, 1)",
+            "rgba(75, 192, 192, 1)",
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: "Percentage Average",
+          },
+        },
+      },
+    },
+  });
 }
 
 //Display Toast message
