@@ -124,8 +124,8 @@
             <div class="my-2 w-1/2 lg:w-1/4 mx-auto">
               <button
                 onclick="displayFormData()"
-                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline mt-5"
-                type="button"
+                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full hover:bg-blue-700 focus:outline-none focus:shadow-outline mt-5"
+                type="button" 
               >
                 Confirm
               </button>
@@ -149,7 +149,7 @@
           class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white"
         >
           <div class="flex justify-center items-center">
-            <h1 class="font-bold uppercase text-5xl">Learning Details</h1>
+            <h1 class="font-bold uppercase text-5xl" style="color: #007bff;">Learning Details</h1>
           </div>
           <br /><br />
           <label style="display: inline; font-size: 16px">
@@ -270,7 +270,7 @@
       class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white hidden"
     >
       <div>
-        <h1 class="font-bold uppercase text-3xl">Upload Student Details</h1>
+        <h1 class="font-bold uppercase text-3xl" style="color: #007bff;">Upload Student Details</h1>
       </div>
       <div class="my-2 flex">
         <input
@@ -280,12 +280,23 @@
         />
         <button
           id="loadButton"
-          class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-r-lg focus:outline-none"
+          class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-r-lg focus:outline-none hover:bg-blue-700"
           onclick="handleFileUpload(); showPrintButton()">
           Load Excel
         </button>
       </div>
+      <div>
+        <label style="display: inline;">
+          <img src="img/icons8-info-24.png" alt="Information" style="display: inline; vertical-align: middle;">
+          Please upload Excel file with one sheet only  <br>
+          <img src="img/icons8-info-24.png" alt="Information" style="display: inline; vertical-align: middle;">
+          The Excel sheet should contain only three columns with the headings: "Sr. No," "Roll No," and "Name of the student".
+        </label>
+      </div>
     </div>
+    </div>
+
+    
 
     <div class="bg-white p-4 mx-4 my-8 shadow-lg hidden" id="gridView2"></div>
 
@@ -338,7 +349,7 @@
 
     <div id="printButtonContainer" class="flex justify-center items-center my-4">
       <button id="printButton"
-        class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-max focus:outline-none focus:shadow-outline"
+        class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-max focus:outline-none hover:bg-blue-700 focus:shadow-outline"
         hidden>
         Print Report <!-- changed from Print page -->
       </button>
@@ -364,16 +375,16 @@
         const teacherSignature = document.createElement('div');
         teacherSignature.style.display = 'inline-block';
         teacherSignature.style.marginRight = '309px'; // Increase the margin-right for more distance
-        teacherSignature.innerHTML = `<div style="border-top: 2px solid #000;">Faculty</div>`;
+        teacherSignature.innerHTML = `<div>Faculty</div>`;
     
         // Create the Principal signature
-        const principalSignature = document.createElement('div');
-        principalSignature.style.display = 'inline-block';
-        principalSignature.innerHTML = `<div style="border-top: 2px solid #000;">Principal</div>`;
+        const hodSignature = document.createElement('div');
+        hodSignature.style.display = 'inline-block';
+        hodSignature.innerHTML = `<div>HOD</div>`;
     
         // Append signatures to the container
         signaturesContainer.appendChild(teacherSignature);
-        signaturesContainer.appendChild(principalSignature);
+        signaturesContainer.appendChild(hodSignature);
     
         // Append the signatures container to the body
         document.body.appendChild(signaturesContainer);
@@ -401,6 +412,7 @@
         printPage();
       });
     </script>
+    
     
 
     <!--Print button code-->
