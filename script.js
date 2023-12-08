@@ -27,6 +27,8 @@ function displayFormData() {
     return;
   }
 
+
+
   let formDataDisplay = document.getElementById("formDataDisplay");
   if (formDataDisplay) {
     // Clear existing form data display
@@ -62,6 +64,20 @@ function displayFormData() {
   document.getElementById("div2").classList.remove("hidden");
 }
 
+function toggleInput(cellId, percentageId, isChecked) {
+  const cellInput = document.getElementById(cellId);
+  const percentageInput = document.getElementById(percentageId);
+
+  if (isChecked) {
+    cellInput.removeAttribute('disabled');
+    percentageInput.removeAttribute('disabled');
+  } else {
+    cellInput.setAttribute('disabled', true);
+    percentageInput.setAttribute('disabled', true);
+  }
+}
+
+
 function SubmitForm2(event) {
   event.preventDefault();
 
@@ -73,12 +89,7 @@ function SubmitForm2(event) {
 
   inputValues = [cell1Value, cell2Value, cell3Value, cell4Value];
 
-  if (
-    !isNaN(cell1Value) &&
-    !isNaN(cell2Value) &&
-    !isNaN(cell3Value) &&
-    !isNaN(cell4Value)
-  ) {
+ 
     // Calculate the total marks from the first form
     let totalMarks = parseInt(
       document.getElementById("targetPercentage").value,
@@ -103,12 +114,9 @@ function SubmitForm2(event) {
 
       // Display object of input values (for demonstration purposes)
       console.log("Input Values:", inputValues);
+      document.getElementById("ExcelInput").classList.remove("hidden");
     }
-    document.getElementById("ExcelInput").classList.remove("hidden");
-  } else {
-    showToast("Enter all values", 5000);
   }
-}
 
 function updatePercentageCell(cellId, percentageId, marks, totalMarks) {
   let marksCell = document.getElementById(cellId);
@@ -146,53 +154,67 @@ function handleFileUpload() {
     //CREATING SECOND TABLE
     //****************************************************************************************************************************************************************************//
 
-    // Initialize the HTML string for the table
-    var html = "<table >";
+    // Assuming you have checkbox IDs for Remembering, Understanding, Applying, Analyze/Evaluate
+var rememberingCheckbox = document.getElementById('rememberingCheckbox');
+var understandingCheckbox = document.getElementById('understandingCheckbox');
+var applyingCheckbox = document.getElementById('applyingCheckbox');
+var analysingCheckbox = document.getElementById('analysingCheckbox');
 
-    var html = "<div ></div><table class='w-full '>";
-    // Loop through the rows of JSON data
-    for (var i = 0; i < jsonData.length; i++) {
-      html += "<tr>";
+// Initialize the HTML string for the table
+var html = "<table class='w-full'>";
 
-      // Loop through the columns of the current row
-      for (var j = 0; j < jsonData[i].length; j++) {
-        // If it's the first row, create header cells
-        if (i === 0) {
-          if (j < 3) {
-            html +=
-              "<th class='text-center h-10 bg-blue-500 '>" +
-              jsonData[i][j] +
-              "</th>"; // Create header cell with data
-          }
-        } else {
-          if (j < 3) {
-            html +=
-              "<td class='text-center h-10 border border-gray-300'>" +
-              jsonData[i][j] +
-              "</td>"; // Create data cell with content
-          }
-        }
+// Loop through the rows of JSON data
+for (var i = 0; i < jsonData.length; i++) {
+  html += "<tr>";
 
-        // Check if it's the first row and the specific column for CO columns
-        if (i === 0 && j === 2) {
-          html +=
-            "<th class='text-center h-10 bg-blue-500'>Remembering</th><th class='text-center h-10 bg-blue-500'>%</th>";
-          html +=
-            "<th class='text-center h-10 bg-blue-500'>Understanding</th><th class='text-center h-10 bg-blue-500'>%</th>";
-          html +=
-            "<th class='text-center h-10 bg-blue-500'>Applying</th><th class='text-center h-10 bg-blue-500'>%</th>";
-          html +=
-            "<th class='text-center h-10 bg-blue-500'>Analyse/Evaluate</th><th class='text-center h-10 bg-blue-500'>%</th>";
-          html += "<th class='text-center h-10 bg-blue-500'>Total</th>";
-        }
+  // Loop through the columns of the current row
+  for (var j = 0; j < jsonData[i].length; j++) {
+    // If it's the first row, create header cells
+    if (i === 0) {
+      if (j < 3) {
+        html +=
+          "<th class='text-center h-10 bg-blue-500'>" +
+          jsonData[i][j] +
+          "</th>"; // Create header cell with data
       }
-
-      // Close the row
-      html += "</tr>";
+    } else {
+      if (j < 3) {
+        html +=
+          "<td class='text-center h-10 border border-gray-300'>" +
+          jsonData[i][j] +
+          "</td>"; // Create data cell with content
+      }
     }
 
-    // Close the table tag
-    html += "</table>";
+    // Check if it's the first row and the specific column for CO columns
+    if (i === 0 && j === 2) {
+      // Add columns based on checkbox status
+      if (rememberingCheckbox.checked) {
+        html += "<th class='text-center h-10 bg-blue-500'>Remembering</th><th class='text-center h-10 bg-blue-500'>%</th>";
+      }
+
+      if (understandingCheckbox.checked) {
+        html += "<th class='text-center h-10 bg-blue-500'>Understanding</th><th class='text-center h-10 bg-blue-500'>%</th>";
+      }
+
+      if (applyingCheckbox.checked) {
+        html += "<th class='text-center h-10 bg-blue-500'>Applying</th><th class='text-center h-10 bg-blue-500'>%</th>";
+      }
+
+      if (analysingCheckbox.checked) {
+        html += "<th class='text-center h-10 bg-blue-500'>Analyse/Evaluate</th><th class='text-center h-10 bg-blue-500'>%</th>";
+      }
+
+      html += "<th class='text-center h-10 bg-blue-500'>Total</th>";
+    }
+  }
+
+  // Close the row
+  html += "</tr>";
+}
+
+// Close the table tag
+html += "</table>";
 
     // Insert the generated HTML into the gridView element
     gridView2.innerHTML = html;
