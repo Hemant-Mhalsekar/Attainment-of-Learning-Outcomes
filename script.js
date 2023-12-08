@@ -2,6 +2,8 @@ var refreshCount = 0;
 let totalMarks; // Variable to store the total marks from the first form
 
 var percentageArray = Array.from({ length: 4 }, () => []);
+var tableDataArray = Array.from({ length: 4 }, () => []);
+
 let inputValues = [];
 let myCharts = [];
 let myChart = null;
@@ -108,6 +110,8 @@ function handleFileUpload() {
   var fileInput = document.getElementById("fileInput");
   var gridView2 = document.getElementById("gridView2");
 
+  tableDataArray = Array.from({ length: 4 }, () => []);
+
   refreshCount++;
 
   localStorage.clear();
@@ -163,6 +167,7 @@ function handleFileUpload() {
             "<th class='text-center h-10 bg-blue-500'>Applying</th><th class='text-center h-10 bg-blue-500'>%</th>";
           html +=
             "<th class='text-center h-10 bg-blue-500'>Analyse/Evaluate</th><th class='text-center h-10 bg-blue-500'>%</th>";
+
           html += "<th class='text-center h-10 bg-blue-500'>Total</th>";
         }
       }
@@ -179,6 +184,7 @@ function handleFileUpload() {
 
     var table = gridView2.querySelector("table");
     var rows = table.getElementsByTagName("tr");
+    tableDataArray.length = rows.length - 1;
 
     for (var i = 1; i < rows.length; i++) {
       for (var j = 3; j < 3 + 4 * 2 + 1; j++) {
@@ -238,6 +244,12 @@ function handleFileUpload() {
                         colIndex,
                         rowIndex,
                         percentage,
+                        columnNumber
+                      );
+                      calculateTotal(
+                        colIndex,
+                        rowIndex,
+                        enteredValue,
                         columnNumber
                       );
                       trackCount();
@@ -314,6 +326,67 @@ function trackPercentage(colIndex, rowIndex, percentage, columnNumber) {
       colIndex: colIndex,
       percentage: percentage,
     });
+  }
+}
+
+//Function to store all entered values  in array
+function calculateTotal(colIndex, rowIndex, enteredValue, columnNumber) {
+  var existingIndex = tableDataArray[columnNumber - 1].findIndex(
+    (item) => item.rowIndex === rowIndex && item.colIndex === colIndex
+  );
+
+  if (existingIndex !== -1) {
+    // Replace the existing percentage value in the array
+    tableDataArray[columnNumber - 1][existingIndex].enteredValue = enteredValue;
+  } else {
+    // Push an object containing rowIndex, colIndex, and percentage
+    tableDataArray[columnNumber - 1].push({
+      rowIndex: rowIndex,
+      colIndex: colIndex,
+      enteredValue: enteredValue,
+    });
+  }
+  calculateRowSum();
+  console.log(tableDataArray);
+}
+
+//this function will calculate row wise sum
+function calculateRowSum() {
+  const rowSums = Array(tableDataArray.length).fill(0);
+
+  tableDataArray.forEach((columnData) => {
+    columnData.forEach((item) => {
+      const rowIndex = item.rowIndex - 1; // Adjusting to 0-based index
+      rowSums[rowIndex] += parseFloat(item.enteredValue) || 0; // Ensure enteredValue is parsed as a number
+    });
+  });
+
+  rowSums.forEach((sum, index) => {
+    console.log(`Row ${index + 1} Sum:`, sum);
+    // You can store the row sum in another array or use it as needed
+  });
+  displayRowSums(rowSums);
+}
+
+function displayRowSums(rowSums) {
+  var table = gridView2.querySelector("table");
+  var rows = table.getElementsByTagName("tr");
+
+  // Check if the number of rows in the table matches the row sums
+  if (rowSums.length === rows.length - 1) {
+    for (var i = 1; i < rows.length; i++) {
+      var lastCellIndex = rows[i].cells.length - 1; // Get the index of the last cell
+      var sumCell = rows[i].cells[lastCellIndex]; // Get the existing last cell
+
+      if (sumCell) {
+        sumCell.textContent = rowSums[i - 1]; // Update the content with the sum for this row
+        sumCell.className = "text-center h-10 border border-gray-300";
+      } else {
+        console.error("Last cell not found in row " + i);
+      }
+    }
+  } else {
+    console.error("Row count mismatch between table and calculated row sums");
   }
 }
 
