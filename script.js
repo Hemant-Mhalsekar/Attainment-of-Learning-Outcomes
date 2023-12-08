@@ -193,7 +193,6 @@ function handleFileUpload() {
               // Store the previous value in a data attribute
               var previousValue = this.getAttribute("data-previous-value");
 
-              // console.log("Row:", rowIndex, "Column:", colIndex, "Value:", enteredValue);
               if (
                 !isNaN(enteredValue) ||
                 (previousValue && enteredValue === "")
@@ -255,13 +254,17 @@ function handleFileUpload() {
                       percentageCell.textContent = percentage.toFixed(2) + "%";
 
                       if (percentage >= 0 && percentage <= 40) {
-                        percentageCell.className = "bg-red-200";
+                        percentageCell.className =
+                          "bg-red-200 border border-red-500";
                       } else if (percentage >= 41 && percentage <= 60) {
-                        percentageCell.className = "bg-blue-200";
+                        percentageCell.className =
+                          "bg-blue-200 border border-blue-500";
                       } else if (percentage >= 61 && percentage <= 80) {
-                        percentageCell.className = "bg-yellow-200";
+                        percentageCell.className =
+                          "bg-yellow-200 border border-yellow-500";
                       } else if (percentage >= 81 && percentage <= 100) {
-                        percentageCell.className = "bg-green-200";
+                        percentageCell.className =
+                          "bg-green-200 border border-green-500";
                       }
                     }
                   }
