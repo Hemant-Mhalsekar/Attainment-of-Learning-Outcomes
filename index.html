@@ -178,12 +178,21 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="py-2 px-4">Remembering</td>
+                    <td class="py-2 px-4"><label>
+                      <input
+                        type="checkbox"
+                        class="mr-2"
+                        id="rememberingCheckbox"
+                        onchange="toggleInput('cell1', 'percentage1', this.checked)"
+                      />
+                      Remembering
+                    </label></td>
                     <td class="py-2 px-4">
                       <input
                         type="number"
                         class="w-full p-2 border border-gray-300"
                         id="cell1"
+                        disabled
                       />
                     </td>
                     <td class="py-2 px-4">
@@ -196,12 +205,21 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="py-2 px-4">Understanding</td>
+                    <td class="py-2 px-4"><label>
+                      <input
+                        type="checkbox"
+                        class="mr-2"
+                        id="understandingCheckbox"
+                        onchange="toggleInput('cell2', 'percentage2', this.checked)"
+                      />
+                      Understanding
+                    </label></td>
                     <td class="py-2 px-4">
                       <input
                         type="number"
                         class="w-full p-2 border border-gray-300"
                         id="cell2"
+                        disabled
                       />
                     </td>
                     <td class="py-2 px-4">
@@ -214,12 +232,21 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="py-2 px-4">Applying</td>
+                    <td class="py-2 px-4"><label>
+                      <input
+                        type="checkbox"
+                        class="mr-2"
+                        id="applyingCheckbox"
+                        onchange="toggleInput('cell3', 'percentage3', this.checked)"
+                      />
+                      Applying
+                    </label></td>
                     <td class="py-2 px-4">
                       <input
                         type="number"
                         class="w-full p-2 border border-gray-300"
                         id="cell3"
+                        disabled
                       />
                     </td>
                     <td class="py-2 px-4">
@@ -232,12 +259,21 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="py-2 px-4">Analyze/Evaluate</td>
+                    <td class="py-2 px-4"><label>
+                      <input
+                        type="checkbox"
+                        class="mr-2"
+                        id="analysingCheckbox"
+                        onchange="toggleInput('cell4', 'percentage4', this.checked)"
+                      />
+                      Analyze/Evaluate
+                    </label></td>
                     <td class="py-2 px-4">
                       <input
                         type="number"
                         class="w-full p-2 border border-gray-300"
                         id="cell4"
+                        disabled
                       />
                     </td>
                     <td class="py-2 px-4">
@@ -267,7 +303,7 @@
 
     <div
       id="ExcelInput"
-      class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white"
+      class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white hidden"
     >
       <div>
         <h1 class="font-bold uppercase text-3xl" style="color: #007bff;">Upload Student Details</h1>
