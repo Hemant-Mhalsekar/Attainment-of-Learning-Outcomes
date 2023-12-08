@@ -10,6 +10,28 @@ let myChart = null;
 
 // Function to display form data
 function displayFormData() {
+  // Validation
+  var courseName = document.getElementById("courseName").value;
+  var category = document.getElementById("category").value;
+  var courseTeacher = document.getElementById("courseTeacher").value;
+  var className = document.getElementById("className").value;
+  var totalStudents = document.getElementById("totalStudents").value;
+  var targetPercentage = document.getElementById("targetPercentage").value;
+
+  if (
+    courseName === "" ||
+    category === "" ||
+    courseTeacher === "" ||
+    className === "" ||
+    totalStudents === "" ||
+    targetPercentage === ""
+  ) {
+    showToast("Please fill in all the required fields", 5000);
+    return;
+  }
+
+
+
   let formDataDisplay = document.getElementById("formDataDisplay");
   if (formDataDisplay) {
     // Clear existing form data display
@@ -18,22 +40,23 @@ function displayFormData() {
     // Get input values directly and display them
     formDataDisplay.innerHTML += `
       <div class="mb-4 p-4 bg-white rounded-lg">
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <h2 style="font-weight: bold; color: #007bff; font-size: 26px; ;text-decoration: underline; ">Course Information</h2>
+        <p class="mb-2"><span class="font-bold">Name of Course:</span> ${
           document.getElementById("courseName").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Name of category:</span> ${
           document.getElementById("category").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Name of the Course Teacher:</span> ${
           document.getElementById("courseTeacher").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Name of the class:</span> ${
           document.getElementById("className").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Number of Students:</span> ${
           document.getElementById("totalStudents").value
         }</p>
-        <p class="mb-2"><span class="font-bold">Course Name:</span> ${
+        <p class="mb-2"><span class="font-bold">Total Marks:</span> ${
           document.getElementById("targetPercentage").value
         }</p>
       </div>`;
@@ -43,6 +66,20 @@ function displayFormData() {
   }
   document.getElementById("div2").classList.remove("hidden");
 }
+
+function toggleInput(cellId, percentageId, isChecked) {
+  const cellInput = document.getElementById(cellId);
+  const percentageInput = document.getElementById(percentageId);
+
+  if (isChecked) {
+    cellInput.removeAttribute('disabled');
+    percentageInput.removeAttribute('disabled');
+  } else {
+    cellInput.setAttribute('disabled', true);
+    percentageInput.setAttribute('disabled', true);
+  }
+}
+
 
 function SubmitForm2(event) {
   event.preventDefault();
@@ -55,12 +92,7 @@ function SubmitForm2(event) {
 
   inputValues = [cell1Value, cell2Value, cell3Value, cell4Value];
 
-  if (
-    !isNaN(cell1Value) &&
-    !isNaN(cell2Value) &&
-    !isNaN(cell3Value) &&
-    !isNaN(cell4Value)
-  ) {
+ 
     // Calculate the total marks from the first form
     let totalMarks = parseInt(
       document.getElementById("targetPercentage").value,
@@ -85,12 +117,9 @@ function SubmitForm2(event) {
 
       // Display object of input values (for demonstration purposes)
       console.log("Input Values:", inputValues);
+      document.getElementById("ExcelInput").classList.remove("hidden");
     }
-    document.getElementById("ExcelInput").classList.remove("hidden");
-  } else {
-    showToast("Enter all values", 5000);
   }
-}
 
 function updatePercentageCell(cellId, percentageId, marks, totalMarks) {
   let marksCell = document.getElementById(cellId);
@@ -129,6 +158,7 @@ function handleFileUpload() {
     //****************************************************************************************************************************************************************************//
     //CREATING SECOND TABLE
     //****************************************************************************************************************************************************************************//
+
 
     // Initialize the HTML string for the table
     var html = "<table >";
@@ -170,14 +200,69 @@ function handleFileUpload() {
 
           html += "<th class='text-center h-10 bg-blue-500'>Total</th>";
         }
-      }
 
-      // Close the row
-      html += "</tr>";
+    // Assuming you have checkbox IDs for Remembering, Understanding, Applying, Analyze/Evaluate
+var rememberingCheckbox = document.getElementById('rememberingCheckbox');
+var understandingCheckbox = document.getElementById('understandingCheckbox');
+var applyingCheckbox = document.getElementById('applyingCheckbox');
+var analysingCheckbox = document.getElementById('analysingCheckbox');
+
+// Initialize the HTML string for the table
+var html = "<table class='w-full'>";
+
+// Loop through the rows of JSON data
+for (var i = 0; i < jsonData.length; i++) {
+  html += "<tr>";
+
+  // Loop through the columns of the current row
+  for (var j = 0; j < jsonData[i].length; j++) {
+    // If it's the first row, create header cells
+    if (i === 0) {
+      if (j < 3) {
+        html +=
+          "<th class='text-center h-10 bg-blue-500'>" +
+          jsonData[i][j] +
+          "</th>"; // Create header cell with data
+      }
+    } else {
+      if (j < 3) {
+        html +=
+          "<td class='text-center h-10 border border-gray-300'>" +
+          jsonData[i][j] +
+          "</td>"; // Create data cell with content
+      }
     }
 
-    // Close the table tag
-    html += "</table>";
+    // Check if it's the first row and the specific column for CO columns
+    if (i === 0 && j === 2) {
+      // Add columns based on checkbox status
+      if (rememberingCheckbox.checked) {
+        html += "<th class='text-center h-10 bg-blue-500'>Remembering</th><th class='text-center h-10 bg-blue-500'>%</th>";
+      }
+
+      if (understandingCheckbox.checked) {
+        html += "<th class='text-center h-10 bg-blue-500'>Understanding</th><th class='text-center h-10 bg-blue-500'>%</th>";
+      }
+
+      if (applyingCheckbox.checked) {
+        html += "<th class='text-center h-10 bg-blue-500'>Applying</th><th class='text-center h-10 bg-blue-500'>%</th>";
+      }
+
+      if (analysingCheckbox.checked) {
+        html += "<th class='text-center h-10 bg-blue-500'>Analyse/Evaluate</th><th class='text-center h-10 bg-blue-500'>%</th>";
+
+      }
+
+      html += "<th class='text-center h-10 bg-blue-500'>Total</th>";
+    }
+  }
+
+  // Close the row
+  html += "</tr>";
+}
+
+// Close the table tag
+html += "</table>";
 
     // Insert the generated HTML into the gridView element
     gridView2.innerHTML = html;
@@ -565,3 +650,23 @@ function showToast(message, duration = 3000) {
     }, duration);
   }
 }
+
+
+
+
+///Print code
+// Disable page reload
+window.addEventListener("beforeunload", function (e) {
+  e.preventDefault();
+  e.returnValue = "Are you sure you want to leave this page?";
+});
+
+//new
+// Function to show the "Print Page" button
+function showPrintButton() {
+  const printButton = document.getElementById("printButton");
+  printButton.removeAttribute("hidden");
+}
+
+// Attach the printPage function to the print button
+document.getElementById("printButton").addEventListener("click", printPage);
