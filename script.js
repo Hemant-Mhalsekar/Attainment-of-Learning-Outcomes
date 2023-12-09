@@ -30,8 +30,6 @@ function displayFormData() {
     return;
   }
 
-
-
   let formDataDisplay = document.getElementById("formDataDisplay");
   if (formDataDisplay) {
     // Clear existing form data display
@@ -72,14 +70,13 @@ function toggleInput(cellId, percentageId, isChecked) {
   const percentageInput = document.getElementById(percentageId);
 
   if (isChecked) {
-    cellInput.removeAttribute('disabled');
-    percentageInput.removeAttribute('disabled');
+    cellInput.removeAttribute("disabled");
+    percentageInput.removeAttribute("disabled");
   } else {
-    cellInput.setAttribute('disabled', true);
-    percentageInput.setAttribute('disabled', true);
+    cellInput.setAttribute("disabled", true);
+    percentageInput.setAttribute("disabled", true);
   }
 }
-
 
 function SubmitForm2(event) {
   event.preventDefault();
@@ -92,34 +89,33 @@ function SubmitForm2(event) {
 
   inputValues = [cell1Value, cell2Value, cell3Value, cell4Value];
 
- 
-    // Calculate the total marks from the first form
-    let totalMarks = parseInt(
-      document.getElementById("targetPercentage").value,
-      10
-    );
+  // Calculate the total marks from the first form
+  let totalMarks = parseInt(
+    document.getElementById("targetPercentage").value,
+    10
+  );
 
-    // Calculate the sum of marks entered in the second form
-    let sumOfMarks = cell1Value + cell2Value + cell3Value + cell4Value;
+  // Calculate the sum of marks entered in the second form
+  let sumOfMarks = cell1Value + cell2Value + cell3Value + cell4Value;
 
-    // Validate that the sum of marks does not exceed the total marks
-    if (sumOfMarks > totalMarks) {
-      // Display an error message or take appropriate action
-      showToast("Sum of marks cannot exceed total marks", 5000);
-    } else {
-      // Calculate percentages and update the corresponding cells
-      updatePercentageCell("cell1", "percentage1", cell1Value, totalMarks);
-      updatePercentageCell("cell2", "percentage2", cell2Value, totalMarks);
-      updatePercentageCell("cell3", "percentage3", cell3Value, totalMarks);
-      updatePercentageCell("cell4", "percentage4", cell4Value, totalMarks);
+  // Validate that the sum of marks does not exceed the total marks
+  if (sumOfMarks > totalMarks) {
+    // Display an error message or take appropriate action
+    showToast("Sum of marks cannot exceed total marks", 5000);
+  } else {
+    // Calculate percentages and update the corresponding cells
+    updatePercentageCell("cell1", "percentage1", cell1Value, totalMarks);
+    updatePercentageCell("cell2", "percentage2", cell2Value, totalMarks);
+    updatePercentageCell("cell3", "percentage3", cell3Value, totalMarks);
+    updatePercentageCell("cell4", "percentage4", cell4Value, totalMarks);
 
-      // Continue with processing the form data
+    // Continue with processing the form data
 
-      // Display object of input values (for demonstration purposes)
-      console.log("Input Values:", inputValues);
-      document.getElementById("ExcelInput").classList.remove("hidden");
-    }
+    // Display object of input values (for demonstration purposes)
+    console.log("Input Values:", inputValues);
+    document.getElementById("ExcelInput").classList.remove("hidden");
   }
+}
 
 function updatePercentageCell(cellId, percentageId, marks, totalMarks) {
   let marksCell = document.getElementById(cellId);
@@ -158,48 +154,6 @@ function handleFileUpload() {
     //****************************************************************************************************************************************************************************//
     //CREATING SECOND TABLE
     //****************************************************************************************************************************************************************************//
-
-
-    // Initialize the HTML string for the table
-    var html = "<table >";
-
-    var html = "<div ></div><table class='w-full '>";
-    // Loop through the rows of JSON data
-    for (var i = 0; i < jsonData.length; i++) {
-      html += "<tr>";
-
-      // Loop through the columns of the current row
-      for (var j = 0; j < jsonData[i].length; j++) {
-        // If it's the first row, create header cells
-        if (i === 0) {
-          if (j < 3) {
-            html +=
-              "<th class='text-center h-10 bg-blue-500 '>" +
-              jsonData[i][j] +
-              "</th>"; // Create header cell with data
-          }
-        } else {
-          if (j < 3) {
-            html +=
-              "<td class='text-center h-10 border border-gray-300'>" +
-              jsonData[i][j] +
-              "</td>"; // Create data cell with content
-          }
-        }
-
-        // Check if it's the first row and the specific column for CO columns
-        if (i === 0 && j === 2) {
-          html +=
-            "<th class='text-center h-10 bg-blue-500'>Remembering</th><th class='text-center h-10 bg-blue-500'>%</th>";
-          html +=
-            "<th class='text-center h-10 bg-blue-500'>Understanding</th><th class='text-center h-10 bg-blue-500'>%</th>";
-          html +=
-            "<th class='text-center h-10 bg-blue-500'>Applying</th><th class='text-center h-10 bg-blue-500'>%</th>";
-          html +=
-            "<th class='text-center h-10 bg-blue-500'>Analyse/Evaluate</th><th class='text-center h-10 bg-blue-500'>%</th>";
-
-          html += "<th class='text-center h-10 bg-blue-500'>Total</th>";
-        }
 
     // Assuming you have checkbox IDs for Remembering, Understanding, Applying, Analyze/Evaluate
 var rememberingCheckbox = document.getElementById('rememberingCheckbox');
@@ -250,7 +204,6 @@ for (var i = 0; i < jsonData.length; i++) {
 
       if (analysingCheckbox.checked) {
         html += "<th class='text-center h-10 bg-blue-500'>Analyse/Evaluate</th><th class='text-center h-10 bg-blue-500'>%</th>";
-
       }
 
       html += "<th class='text-center h-10 bg-blue-500'>Total</th>";
@@ -269,7 +222,6 @@ html += "</table>";
 
     var table = gridView2.querySelector("table");
     var rows = table.getElementsByTagName("tr");
-    tableDataArray.length = rows.length - 1;
 
     for (var i = 1; i < rows.length; i++) {
       for (var j = 3; j < 3 + 4 * 2 + 1; j++) {
@@ -284,6 +236,7 @@ html += "</table>";
               // Store the previous value in a data attribute
               var previousValue = this.getAttribute("data-previous-value");
 
+              // console.log("Row:", rowIndex, "Column:", colIndex, "Value:", enteredValue);
               if (
                 !isNaN(enteredValue) ||
                 (previousValue && enteredValue === "")
@@ -331,12 +284,6 @@ html += "</table>";
                         percentage,
                         columnNumber
                       );
-                      calculateTotal(
-                        colIndex,
-                        rowIndex,
-                        enteredValue,
-                        columnNumber
-                      );
                       trackCount();
                     }
 
@@ -349,20 +296,6 @@ html += "</table>";
                     // console.log("Percentage : "+percentage);
                     if (percentageCell) {
                       percentageCell.textContent = percentage.toFixed(2) + "%";
-
-                      if (percentage >= 0 && percentage <= 40) {
-                        percentageCell.className =
-                          "bg-red-200 border border-red-500";
-                      } else if (percentage >= 41 && percentage <= 60) {
-                        percentageCell.className =
-                          "bg-blue-200 border border-blue-500";
-                      } else if (percentage >= 61 && percentage <= 80) {
-                        percentageCell.className =
-                          "bg-yellow-200 border border-yellow-500";
-                      } else if (percentage >= 81 && percentage <= 100) {
-                        percentageCell.className =
-                          "bg-green-200 border border-green-500";
-                      }
                     }
                   }
                 } else {
@@ -376,7 +309,6 @@ html += "</table>";
                 var percentageCell = rows[rowIndex].cells[percentageCellIndex];
                 if (percentageCell) {
                   percentageCell.textContent = "";
-                  percentageCell.className = "bg-white";
                 }
               }
             });
@@ -392,9 +324,9 @@ html += "</table>";
       }
     }
   };
-
   reader.readAsArrayBuffer(file);
 }
+
 //Function to store all percentage in array
 function trackPercentage(colIndex, rowIndex, percentage, columnNumber) {
   var existingIndex = percentageArray[columnNumber - 1].findIndex(
@@ -579,6 +511,7 @@ function generatePieCharts(counts) {
     myCharts.push(newChart);
   }
 }
+
 function generateBarGraph(columnAverages) {
   const canvas = document.getElementById("barGraph");
 
