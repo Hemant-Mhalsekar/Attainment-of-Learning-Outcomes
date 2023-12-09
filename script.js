@@ -433,9 +433,6 @@ function showToast(message, duration = 3000) {
   }
 }
 
-
-
-
 ///Print code
 // Disable page reload
 window.addEventListener("beforeunload", function (e) {
