@@ -550,6 +550,7 @@ function calculateColumnWiseAverage() {
 //function to generate pie chart
 function generatePieCharts(counts) {
   document.getElementById("piechart").classList.remove("hidden");
+  document.getElementById("barGraph").classList.remove("hidden");
   myCharts.forEach((chart) => chart.destroy());
   myCharts = [];
 
