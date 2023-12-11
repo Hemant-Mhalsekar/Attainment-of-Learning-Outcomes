@@ -711,14 +711,13 @@ function showToast(message, duration = 3000) {
   }
 }
 
-///Print code
 // Disable page reload
 window.addEventListener("beforeunload", function (e) {
   e.preventDefault();
   e.returnValue = "Are you sure you want to leave this page?";
 });
 
-//new
+//Print button code
 // Function to show the "Print Page" button
 function showPrintButton() {
   const printButton = document.getElementById("printButton");
@@ -727,3 +726,49 @@ function showPrintButton() {
 
 // Attach the printPage function to the print button
 document.getElementById("printButton").addEventListener("click", printPage);
+
+// Function to handle the printing
+function printPage() {
+  // Hide elements that you want to exclude from printing
+  document.getElementById('entireform').style.display = 'none';
+  document.getElementById('toast').style.display = 'none';
+  document.getElementById('ExcelInput').style.display = 'none';
+  document.getElementById('confirm2').style.display = 'none';
+  document.getElementById('printButton').style.display = 'none';
+
+  // Create a container for the signatures
+  const signaturesContainer = document.createElement('div');
+  signaturesContainer.style.textAlign = 'center';
+  signaturesContainer.style.marginTop = '50px';
+  signaturesContainer.className = 'print-only'; // Add a CSS class for printing
+
+  // Create the Teacher Incharge signature
+  const teacherSignature = document.createElement('div');
+  teacherSignature.style.display = 'inline-block';
+  teacherSignature.style.marginRight = '309px'; // Increase the margin-right for more distance
+  teacherSignature.innerHTML = `<div>Faculty</div>`;
+
+  // Create the Principal signature
+  const hodSignature = document.createElement('div');
+  hodSignature.style.display = 'inline-block';
+  hodSignature.innerHTML = `<div>HOD</div>`;
+
+  // Append signatures to the container
+  signaturesContainer.appendChild(teacherSignature);
+  signaturesContainer.appendChild(hodSignature);
+
+  // Append the signatures container to the body
+  document.body.appendChild(signaturesContainer);
+
+  // Trigger the print dialog
+  window.print();
+
+  // Remove the signatures container after printing
+  document.body.removeChild(signaturesContainer);
+
+  // Restore the hidden elements after printing
+  document.getElementById('entireform').style.display = 'block';
+  document.getElementById('ExcelInput').style.display = 'block';
+  document.getElementById('confirm2').style.display = 'block';
+  document.getElementById('printButton').style.display = 'block';
+}
