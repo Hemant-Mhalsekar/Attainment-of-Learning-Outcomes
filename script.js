@@ -94,18 +94,22 @@ function SubmitForm2(event) {
 
   if (rememberingCheckbox.checked) {
     inputValues.push(cell1Value);
+    document.getElementById("RememberingPie").classList.remove("hidden");
   }
 
   if (understandingCheckbox.checked) {
     inputValues.push(cell2Value);
+    document.getElementById("UnderstandingPie").classList.remove("hidden");
   }
 
   if (applyingCheckbox.checked) {
     inputValues.push(cell3Value);
+    document.getElementById("ApplyingPie").classList.remove("hidden");
   }
 
   if (analysingCheckbox.checked) {
     inputValues.push(cell4Value);
+    document.getElementById("AnalysePie").classList.remove("hidden");
   }
 
   // Calculate the total marks from the first form
@@ -515,7 +519,7 @@ function trackCount() {
     }
   }
   // console.log("Count ", counts);
-  generatePieCharts(counts);
+  checkCheckBox(counts);
 
   const columnAverages = calculateColumnWiseAverage();
   console.log("Column-wise averages:", columnAverages);
@@ -544,19 +548,70 @@ function calculateColumnWiseAverage() {
     // Push the average for the current column into the array
     columnAverages.push(columnAverage);
   }
-  generateBarGraph(columnAverages);
+
+  var rememberingCheckbox = document.getElementById("rememberingCheckbox");
+  var understandingCheckbox = document.getElementById("understandingCheckbox");
+  var applyingCheckbox = document.getElementById("applyingCheckbox");
+  var analysingCheckbox = document.getElementById("analysingCheckbox");
+
+  // Array to store checked checkboxes
+  var labels = []; // Array to store the labels based on checked checkboxes
+
+  // Check which checkboxes are checked and add labels accordingly
+  if (rememberingCheckbox.checked) {
+    labels.push("Remembering");
+  }
+  if (understandingCheckbox.checked) {
+    labels.push("Understanding");
+  }
+  if (applyingCheckbox.checked) {
+    labels.push("Application");
+  }
+  if (analysingCheckbox.checked) {
+    labels.push("Analyse/Evaluate");
+  }
+
+  generateBarGraph(columnAverages, labels);
+}
+function checkCheckBox(counts) {
+  var rememberingCheckbox = document.getElementById("rememberingCheckbox");
+  var understandingCheckbox = document.getElementById("understandingCheckbox");
+  var applyingCheckbox = document.getElementById("applyingCheckbox");
+  var analysingCheckbox = document.getElementById("analysingCheckbox");
+
+  // Array to store checked checkboxes
+  var checkedCheckboxes = [];
+
+  // Check which checkboxes are checked
+  if (rememberingCheckbox.checked) {
+    checkedCheckboxes.push("column1Chart");
+  }
+  if (understandingCheckbox.checked) {
+    checkedCheckboxes.push("column2Chart");
+  }
+  if (applyingCheckbox.checked) {
+    checkedCheckboxes.push("column3Chart");
+  }
+  if (analysingCheckbox.checked) {
+    checkedCheckboxes.push("column4Chart");
+  }
+
+  // Generate pie charts based on checked checkboxes
+  generatePieCharts(counts, checkedCheckboxes);
 }
 
-//function to generate pie chart
-function generatePieCharts(counts) {
+// Function to generate pie chart
+function generatePieCharts(counts, checkedCheckboxes) {
   document.getElementById("piechart").classList.remove("hidden");
   document.getElementById("barGraph").classList.remove("hidden");
+
   myCharts.forEach((chart) => chart.destroy());
   myCharts = [];
 
-  // Create pie charts for each column
-  for (let i = 0; i < counts.length; i++) {
-    const canvasId = `column${i + 1}Chart`;
+  // Create pie charts for each checked checkbox
+  for (let i = 0; i < checkedCheckboxes.length; i++) {
+    const canvasId = checkedCheckboxes[i];
+
     const ctx = document.getElementById(canvasId).getContext("2d");
 
     const newChart = new Chart(ctx, {
@@ -580,15 +635,16 @@ function generatePieCharts(counts) {
         responsive: false,
         title: {
           display: true,
-          text: `Column ${i + 1} Chart`,
+          text: `${canvasId} Chart`,
         },
       },
     });
+
     myCharts.push(newChart);
   }
 }
 
-function generateBarGraph(columnAverages) {
+function generateBarGraph(columnAverages, labels) {
   const canvas = document.getElementById("barGraph");
 
   // Remove inline styles from the canvas element
@@ -608,12 +664,7 @@ function generateBarGraph(columnAverages) {
   myChart = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: [
-        "Remembering",
-        "Understanding",
-        "Application",
-        "Analyse/Evaluate",
-      ],
+      labels: labels,
       datasets: [
         {
           label: "Percentage Average",
