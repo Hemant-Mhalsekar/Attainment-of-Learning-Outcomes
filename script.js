@@ -723,27 +723,27 @@ document.getElementById("printButton").addEventListener("click", printPage);
 // Function to handle the printing
 function printPage() {
   // Hide elements that you want to exclude from printing
-  document.getElementById('entireform').style.display = 'none';
-  document.getElementById('toast').style.display = 'none';
-  document.getElementById('ExcelInput').style.display = 'none';
-  document.getElementById('confirm2').style.display = 'none';
-  document.getElementById('printButton').style.display = 'none';
+  document.getElementById("entireform").style.display = "none";
+  document.getElementById("toast").style.display = "none";
+  document.getElementById("ExcelInput").style.display = "none";
+  document.getElementById("confirm2").style.display = "none";
+  document.getElementById("printButton").style.display = "none";
 
   // Create a container for the signatures
-  const signaturesContainer = document.createElement('div');
-  signaturesContainer.style.textAlign = 'center';
-  signaturesContainer.style.marginTop = '50px';
-  signaturesContainer.className = 'print-only'; // Add a CSS class for printing
+  const signaturesContainer = document.createElement("div");
+  signaturesContainer.style.textAlign = "center";
+  signaturesContainer.style.marginTop = "50px";
+  signaturesContainer.className = "print-only"; // Add a CSS class for printing
 
   // Create the Teacher Incharge signature
-  const teacherSignature = document.createElement('div');
-  teacherSignature.style.display = 'inline-block';
-  teacherSignature.style.marginRight = '309px'; // Increase the margin-right for more distance
+  const teacherSignature = document.createElement("div");
+  teacherSignature.style.display = "inline-block";
+  teacherSignature.style.marginRight = "309px"; // Increase the margin-right for more distance
   teacherSignature.innerHTML = `<div>Faculty</div>`;
 
   // Create the Principal signature
-  const hodSignature = document.createElement('div');
-  hodSignature.style.display = 'inline-block';
+  const hodSignature = document.createElement("div");
+  hodSignature.style.display = "inline-block";
   hodSignature.innerHTML = `<div>HOD</div>`;
 
   // Append signatures to the container
@@ -760,8 +760,8 @@ function printPage() {
   document.body.removeChild(signaturesContainer);
 
   // Restore the hidden elements after printing
-  document.getElementById('entireform').style.display = 'block';
-  document.getElementById('ExcelInput').style.display = 'block';
-  document.getElementById('confirm2').style.display = 'block';
-  document.getElementById('printButton').style.display = 'block';
+  document.getElementById("entireform").style.display = "block";
+  document.getElementById("ExcelInput").style.display = "block";
+  document.getElementById("confirm2").style.display = "block";
+  document.getElementById("printButton").style.display = "block";
 }
