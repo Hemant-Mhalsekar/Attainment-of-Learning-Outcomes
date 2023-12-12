@@ -3,11 +3,11 @@
   <head>
     <title>Attainment of Learning Outcomes</title>
     <link rel="icon" type="image/x-icon" href="img/DMClogoicon.ico" />
-    <!-- <link rel="stylesheet" href="style.css" /> -->
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css"
       rel="stylesheet"
-    />
+      />
+    <link rel="stylesheet" href="normalize.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="script.js" defer></script>
@@ -341,13 +341,13 @@
 
     <div
       id="piechart"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 justify-items-center my-4 p-2 hidden"
+      class="grid grid-cols-2 justify-center justify-items-center gap-1 my-2 p-2 hidden"
     >
       <div class="text-center hidden" id="RememberingPie">
         <h1 class="font-bold text-xl mb-4">Remembering</h1>
         <canvas
           id="column1Chart"
-          class="shadow-2xl rounded-2xl p-8"
+          class="shadow-md rounded-2xl p-8"
           width="300"
           height="300"
         ></canvas>
@@ -356,7 +356,7 @@
         <h1 class="font-bold text-xl mb-4">Understanding</h1>
         <canvas
           id="column2Chart"
-          class="shadow-2xl rounded-2xl p-8"
+          class="shadow-md rounded-2xl p-8"
           width="300"
           height="300"
         ></canvas>
@@ -365,7 +365,7 @@
         <h1 class="font-bold text-xl mb-4">Applying</h1>
         <canvas
           id="column3Chart"
-          class="shadow-2xl rounded-2xl p-8"
+          class="shadow-md rounded-2xl p-8"
           width="300"
           height="300"
         ></canvas>
@@ -374,15 +374,17 @@
         <h1 class="font-bold text-xl mb-4">Analyse/Evaluate</h1>
         <canvas
           id="column4Chart"
-          class="shadow-2xl rounded-2xl p-8"
+          class="shadow-md rounded-2xl p-8"
           width="300"
           height="300"
         ></canvas>
       </div>
     </div>
-    <div class="w-full flex justify-center items-center ">
-      <canvas id="barGraph" class="shadow-lg p-16 hidden"></canvas>
+    
+    <div style="width:50%; height:auto; margin-left:60px; margin-top:50px;">
+      <canvas id="barGraph" class="shadow-lg p-15 hidden"></canvas>
     </div>
+    
 
     <!--Table to enter marks of learning outcome ends here-->
 
