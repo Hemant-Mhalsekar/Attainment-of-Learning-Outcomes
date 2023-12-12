@@ -647,13 +647,6 @@ function generatePieCharts(counts, checkedCheckboxes) {
 function generateBarGraph(columnAverages, labels) {
   const canvas = document.getElementById("barGraph");
 
-  // Remove inline styles from the canvas element
-  canvas.removeAttribute("style");
-
-  // Set the width and height of the canvas element
-  canvas.style.width = 500;
-  canvas.style.height = 200;
-
   // Destroy previous chart instance if it exists
   if (myChart) {
     myChart.destroy();
