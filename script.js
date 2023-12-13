@@ -71,7 +71,7 @@ function toggleInput(cellId, percentageId, isChecked) {
 
   if (isChecked) {
     cellInput.removeAttribute("disabled");
-    percentageInput.removeAttribute("disabled");
+    // percentageInput.removeAttribute("disabled");
   } else {
     cellInput.setAttribute("disabled", true);
     percentageInput.setAttribute("disabled", true);
@@ -265,6 +265,9 @@ function handleFileUpload() {
     tableDataArray.length = rows.length - 1;
 
     let collength = col;
+    if (col == 1) {
+      col = col - 3;
+    }
     if (col == 2) {
       col = col - 2;
     }
