@@ -94,18 +94,22 @@ function SubmitForm2(event) {
 
   if (rememberingCheckbox.checked) {
     inputValues.push(cell1Value);
+    document.getElementById("RememberingPie").classList.remove("hidden");
   }
 
   if (understandingCheckbox.checked) {
     inputValues.push(cell2Value);
+    document.getElementById("UnderstandingPie").classList.remove("hidden");
   }
 
   if (applyingCheckbox.checked) {
     inputValues.push(cell3Value);
+    document.getElementById("ApplyingPie").classList.remove("hidden");
   }
 
   if (analysingCheckbox.checked) {
     inputValues.push(cell4Value);
+    document.getElementById("AnalysePie").classList.remove("hidden");
   }
 
   // Calculate the total marks from the first form
@@ -515,7 +519,7 @@ function trackCount() {
     }
   }
   // console.log("Count ", counts);
-  generatePieCharts(counts);
+  checkCheckBox(counts);
 
   const columnAverages = calculateColumnWiseAverage();
   console.log("Column-wise averages:", columnAverages);
@@ -544,19 +548,70 @@ function calculateColumnWiseAverage() {
     // Push the average for the current column into the array
     columnAverages.push(columnAverage);
   }
-  generateBarGraph(columnAverages);
+
+  var rememberingCheckbox = document.getElementById("rememberingCheckbox");
+  var understandingCheckbox = document.getElementById("understandingCheckbox");
+  var applyingCheckbox = document.getElementById("applyingCheckbox");
+  var analysingCheckbox = document.getElementById("analysingCheckbox");
+
+  // Array to store checked checkboxes
+  var labels = []; // Array to store the labels based on checked checkboxes
+
+  // Check which checkboxes are checked and add labels accordingly
+  if (rememberingCheckbox.checked) {
+    labels.push("Remembering");
+  }
+  if (understandingCheckbox.checked) {
+    labels.push("Understanding");
+  }
+  if (applyingCheckbox.checked) {
+    labels.push("Application");
+  }
+  if (analysingCheckbox.checked) {
+    labels.push("Analyse/Evaluate");
+  }
+
+  generateBarGraph(columnAverages, labels);
+}
+function checkCheckBox(counts) {
+  var rememberingCheckbox = document.getElementById("rememberingCheckbox");
+  var understandingCheckbox = document.getElementById("understandingCheckbox");
+  var applyingCheckbox = document.getElementById("applyingCheckbox");
+  var analysingCheckbox = document.getElementById("analysingCheckbox");
+
+  // Array to store checked checkboxes
+  var checkedCheckboxes = [];
+
+  // Check which checkboxes are checked
+  if (rememberingCheckbox.checked) {
+    checkedCheckboxes.push("column1Chart");
+  }
+  if (understandingCheckbox.checked) {
+    checkedCheckboxes.push("column2Chart");
+  }
+  if (applyingCheckbox.checked) {
+    checkedCheckboxes.push("column3Chart");
+  }
+  if (analysingCheckbox.checked) {
+    checkedCheckboxes.push("column4Chart");
+  }
+
+  // Generate pie charts based on checked checkboxes
+  generatePieCharts(counts, checkedCheckboxes);
 }
 
-//function to generate pie chart
-function generatePieCharts(counts) {
+// Function to generate pie chart
+function generatePieCharts(counts, checkedCheckboxes) {
   document.getElementById("piechart").classList.remove("hidden");
   document.getElementById("barGraph").classList.remove("hidden");
+
   myCharts.forEach((chart) => chart.destroy());
   myCharts = [];
 
-  // Create pie charts for each column
-  for (let i = 0; i < counts.length; i++) {
-    const canvasId = `column${i + 1}Chart`;
+  // Create pie charts for each checked checkbox
+  for (let i = 0; i < checkedCheckboxes.length; i++) {
+    const canvasId = checkedCheckboxes[i];
+
     const ctx = document.getElementById(canvasId).getContext("2d");
 
     const newChart = new Chart(ctx, {
@@ -580,23 +635,17 @@ function generatePieCharts(counts) {
         responsive: false,
         title: {
           display: true,
-          text: `Column ${i + 1} Chart`,
+          text: `${canvasId} Chart`,
         },
       },
     });
+
     myCharts.push(newChart);
   }
 }
 
-function generateBarGraph(columnAverages) {
+function generateBarGraph(columnAverages, labels) {
   const canvas = document.getElementById("barGraph");
-
-  // Remove inline styles from the canvas element
-  canvas.removeAttribute("style");
-
-  // Set the width and height of the canvas element
-  canvas.style.width = 500;
-  canvas.style.height = 200;
 
   // Destroy previous chart instance if it exists
   if (myChart) {
@@ -608,12 +657,7 @@ function generateBarGraph(columnAverages) {
   myChart = new Chart(ctx, {
     type: "bar",
     data: {
-      labels: [
-        "Remembering",
-        "Understanding",
-        "Application",
-        "Analyse/Evaluate",
-      ],
+      labels: labels,
       datasets: [
         {
           label: "Percentage Average",
@@ -660,14 +704,13 @@ function showToast(message, duration = 3000) {
   }
 }
 
-///Print code
 // Disable page reload
 window.addEventListener("beforeunload", function (e) {
   e.preventDefault();
   e.returnValue = "Are you sure you want to leave this page?";
 });
 
-//new
+//Print button code
 // Function to show the "Print Page" button
 function showPrintButton() {
   const printButton = document.getElementById("printButton");
@@ -676,3 +719,49 @@ function showPrintButton() {
 
 // Attach the printPage function to the print button
 document.getElementById("printButton").addEventListener("click", printPage);
+
+// Function to handle the printing
+function printPage() {
+  // Hide elements that you want to exclude from printing
+  document.getElementById("entireform").style.display = "none";
+  document.getElementById("toast").style.display = "none";
+  document.getElementById("ExcelInput").style.display = "none";
+  document.getElementById("confirm2").style.display = "none";
+  document.getElementById("printButton").style.display = "none";
+
+  // Create a container for the signatures
+  const signaturesContainer = document.createElement("div");
+  signaturesContainer.style.textAlign = "center";
+  signaturesContainer.style.marginTop = "5cm";
+  signaturesContainer.className = "print-only"; // Add a CSS class for printing
+
+  // Create the Teacher Incharge signature
+  const teacherSignature = document.createElement("div");
+  teacherSignature.style.display = "inline-block";
+  teacherSignature.style.marginRight = "309px"; // Increase the margin-right for more distance
+  teacherSignature.innerHTML = `<div style="border-top: 3px solid #000; width: 80px;">Faculty</div>`; // Add a slightly longer line above "Faculty"
+
+  // Create the Principal signature
+  const hodSignature = document.createElement("div");
+  hodSignature.style.display = "inline-block";
+  hodSignature.innerHTML = `<div style="border-top: 3px solid #000; width: 70px;">HOD</div>`; // Add a slightly longer line above "HOD"
+
+  // Append signatures to the container
+  signaturesContainer.appendChild(teacherSignature);
+  signaturesContainer.appendChild(hodSignature);
+
+  // Append the signatures container to the body
+  document.body.appendChild(signaturesContainer);
+
+  // Trigger the print dialog
+  window.print();
+
+  // Remove the signatures container after printing
+  document.body.removeChild(signaturesContainer);
+
+  // Restore the hidden elements after printing
+  document.getElementById("entireform").style.display = "block";
+  document.getElementById("ExcelInput").style.display = "block";
+  document.getElementById("confirm2").style.display = "block";
+  document.getElementById("printButton").style.display = "block";
+}

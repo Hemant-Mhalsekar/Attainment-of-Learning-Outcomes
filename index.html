@@ -3,11 +3,11 @@
   <head>
     <title>Attainment of Learning Outcomes</title>
     <link rel="icon" type="image/x-icon" href="img/DMClogoicon.ico" />
-    <!-- <link rel="stylesheet" href="style.css" /> -->
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="normalize.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
     <script src="script.js" defer></script>
@@ -36,7 +36,9 @@
           class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto shadow-2xl rounded-2xl bg-white"
         >
           <div class="flex justify-center items-center">
-            <h1 class="font-bold uppercase text-5xl" style="color: #007bff;">Course Details</h1>
+            <h1 class="font-bold uppercase text-5xl" style="color: #007bff">
+              Course Details
+            </h1>
           </div>
           <br /><br />
           <label style="display: inline; font-size: 16px">
@@ -125,7 +127,7 @@
               <button
                 onclick="displayFormData()"
                 class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full hover:bg-blue-700 focus:outline-none focus:shadow-outline mt-5"
-                type="button" 
+                type="button"
               >
                 Confirm
               </button>
@@ -137,7 +139,8 @@
 
     <div
       id="formDataDisplay"
-      class="hidden w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto shadow-2xl rounded-2xl bg-white">
+      class="hidden w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto shadow-2xl rounded-2xl bg-white"
+    >
       <!-- Display form data here -->
     </div>
 
@@ -149,7 +152,9 @@
           class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white"
         >
           <div class="flex justify-center items-center">
-            <h1 class="font-bold uppercase text-5xl" style="color: #007bff;">Learning Details</h1>
+            <h1 class="font-bold uppercase text-5xl" style="color: #007bff">
+              Learning Details
+            </h1>
           </div>
           <br /><br />
           <label style="display: inline; font-size: 16px">
@@ -178,15 +183,17 @@
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="py-2 px-4"><label>
-                      <input
-                        type="checkbox"
-                        class="mr-2"
-                        id="rememberingCheckbox"
-                        onchange="toggleInput('cell1', 'percentage1', this.checked)"
-                      />
-                      Remembering
-                    </label></td>
+                    <td class="py-2 px-4">
+                      <label>
+                        <input
+                          type="checkbox"
+                          class="mr-2"
+                          id="rememberingCheckbox"
+                          onchange="toggleInput('cell1', 'percentage1', this.checked)"
+                        />
+                        Remembering
+                      </label>
+                    </td>
                     <td class="py-2 px-4">
                       <input
                         type="number"
@@ -205,15 +212,17 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="py-2 px-4"><label>
-                      <input
-                        type="checkbox"
-                        class="mr-2"
-                        id="understandingCheckbox"
-                        onchange="toggleInput('cell2', 'percentage2', this.checked)"
-                      />
-                      Understanding
-                    </label></td>
+                    <td class="py-2 px-4">
+                      <label>
+                        <input
+                          type="checkbox"
+                          class="mr-2"
+                          id="understandingCheckbox"
+                          onchange="toggleInput('cell2', 'percentage2', this.checked)"
+                        />
+                        Understanding
+                      </label>
+                    </td>
                     <td class="py-2 px-4">
                       <input
                         type="number"
@@ -232,15 +241,17 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="py-2 px-4"><label>
-                      <input
-                        type="checkbox"
-                        class="mr-2"
-                        id="applyingCheckbox"
-                        onchange="toggleInput('cell3', 'percentage3', this.checked)"
-                      />
-                      Applying
-                    </label></td>
+                    <td class="py-2 px-4">
+                      <label>
+                        <input
+                          type="checkbox"
+                          class="mr-2"
+                          id="applyingCheckbox"
+                          onchange="toggleInput('cell3', 'percentage3', this.checked)"
+                        />
+                        Applying
+                      </label>
+                    </td>
                     <td class="py-2 px-4">
                       <input
                         type="number"
@@ -259,15 +270,17 @@
                     </td>
                   </tr>
                   <tr>
-                    <td class="py-2 px-4"><label>
-                      <input
-                        type="checkbox"
-                        class="mr-2"
-                        id="analysingCheckbox"
-                        onchange="toggleInput('cell4', 'percentage4', this.checked)"
-                      />
-                      Analyze/Evaluate
-                    </label></td>
+                    <td class="py-2 px-4">
+                      <label>
+                        <input
+                          type="checkbox"
+                          class="mr-2"
+                          id="analysingCheckbox"
+                          onchange="toggleInput('cell4', 'percentage4', this.checked)"
+                        />
+                        Analyze/Evaluate
+                      </label>
+                    </td>
                     <td class="py-2 px-4">
                       <input
                         type="number"
@@ -290,7 +303,8 @@
             </div>
             <div class="my-2 w-1/2 lg:w-1/4 mx-auto">
               <button
-                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline mt-5 hover:bg-blue-700" id="confirm2"
+                class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-full focus:outline-none focus:shadow-outline mt-5 hover:bg-blue-700"
+                id="confirm2"
                 onclick="SubmitForm2(event)"
               >
                 Confirm
@@ -306,7 +320,9 @@
       class="w-full p-8 my-4 md:px-12 lg:w-9/12 lg:pl-20 lg:pr-40 mx-auto rounded-2xl shadow-2xl bg-white hidden"
     >
       <div>
-        <h1 class="font-bold uppercase text-3xl" style="color: #007bff;">Upload Student Details</h1>
+        <h1 class="font-bold uppercase text-3xl" style="color: #007bff">
+          Upload Student Details
+        </h1>
       </div>
       <div class="my-2 flex">
         <input
@@ -317,144 +333,97 @@
         <button
           id="loadButton"
           class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-r-lg focus:outline-none hover:bg-blue-700"
-          onclick="handleFileUpload(); showPrintButton()">
+          onclick="handleFileUpload(); showPrintButton()"
+        >
           Load Excel
         </button>
       </div>
       <div>
-        <label style="display: inline;">
-          <img src="img/icons8-info-24.png" alt="Information" style="display: inline; vertical-align: middle;">
-          Please upload Excel file with one sheet only  <br>
-          <img src="img/icons8-info-24.png" alt="Information" style="display: inline; vertical-align: middle;">
-          The Excel sheet should contain only three columns with the headings: "Sr. No," "Roll No," and "Name of the student".
+        <label style="display: inline">
+          <img
+            src="img/icons8-info-24.png"
+            alt="Information"
+            style="display: inline; vertical-align: middle"
+          />
+          Please upload Excel file with one sheet only <br />
+          <img
+            src="img/icons8-info-24.png"
+            alt="Information"
+            style="display: inline; vertical-align: middle"
+          />
+          The Excel sheet should contain only three columns with the headings:
+          "Sr. No," "Roll No," and "Name of the student".
         </label>
       </div>
     </div>
-    </div>
-
-    
 
     <div
-      class="bg-white p-4 mx-4 my-8 shadow-lg rounded-2xl"
+      class="bg-white p-4 mx-4 my-8 shadow-lg rounded-2xl hidden"
       id="gridView2"
     ></div>
 
     <div
       id="piechart"
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 justify-items-center my-4 p-2 hidden"
+      class="grid grid-cols-2 justify-center justify-items-center gap-1 my-2 p-2 hidden"
     >
-      <div class="text-center">
+      <div class="text-center hidden" id="RememberingPie">
         <h1 class="font-bold text-xl mb-4">Remembering</h1>
         <canvas
           id="column1Chart"
-          class="shadow-2xl rounded-2xl p-8"
+          class="shadow-md rounded-2xl p-8"
           width="300"
           height="300"
         ></canvas>
       </div>
-      <div class="text-center">
+      <div class="text-center hidden" id="UnderstandingPie">
         <h1 class="font-bold text-xl mb-4">Understanding</h1>
         <canvas
           id="column2Chart"
-          class="shadow-2xl rounded-2xl p-8"
+          class="shadow-md rounded-2xl p-8"
           width="300"
           height="300"
         ></canvas>
       </div>
-      <div class="text-center my-15">
+      <div class="text-center my-15 hidden" id="ApplyingPie">
         <h1 class="font-bold text-xl mb-4">Applying</h1>
         <canvas
           id="column3Chart"
-          class="shadow-2xl rounded-2xl p-8"
+          class="shadow-md rounded-2xl p-8"
           width="300"
           height="300"
         ></canvas>
       </div>
-      <div class="text-center my-15">
+      <div class="text-center my-15 hidden" id="AnalysePie">
         <h1 class="font-bold text-xl mb-4">Analyse/Evaluate</h1>
         <canvas
           id="column4Chart"
-          class="shadow-2xl rounded-2xl p-8"
+          class="shadow-md rounded-2xl p-8"
           width="300"
           height="300"
         ></canvas>
       </div>
     </div>
-    <div class="w-full flex justify-center items-center ">
-      <canvas id="barGraph" class="shadow-lg p-16 hidden"></canvas>
+
+    <div style="width: 50%; height: auto; margin-left: 30px; margin-top: 100px">
+      <canvas id="barGraph" class="shadow-lg p-15 hidden"></canvas>
     </div>
 
     <!--Table to enter marks of learning outcome ends here-->
 
+    <!--Print Block-->
 
-   <!--Print Block-->
-
-    <div id="printButtonContainer" class="flex justify-center items-center my-4">
-      <button id="printButton"
+    <div
+      id="printButtonContainer"
+      class="flex justify-center items-center my-4"
+    >
+      <button
+        id="printButton"
         class="uppercase text-sm font-bold tracking-wide bg-blue-900 text-gray-100 p-3 rounded-lg w-max focus:outline-none hover:bg-blue-700 focus:shadow-outline"
-        hidden>
-        Print Report <!-- changed from Print page -->
+        hidden
+      >
+        Print Report
+        <!-- changed from Print page -->
       </button>
     </div>
-
-    <script>
-      // Function to handle the printing
-      function printPage() {
-        // Hide elements that you want to exclude from printing
-        document.getElementById('entireform').style.display = 'none';
-        document.getElementById('toast').style.display = 'none';
-        document.getElementById('ExcelInput').style.display = 'none';
-        document.getElementById('confirm2').style.display = 'none';
-        document.getElementById('printButton').style.display = 'none';
-    
-        // Create a container for the signatures
-        const signaturesContainer = document.createElement('div');
-        signaturesContainer.style.textAlign = 'center';
-        signaturesContainer.style.marginTop = '50px';
-        signaturesContainer.className = 'print-only'; // Add a CSS class for printing
-    
-        // Create the Teacher Incharge signature
-        const teacherSignature = document.createElement('div');
-        teacherSignature.style.display = 'inline-block';
-        teacherSignature.style.marginRight = '309px'; // Increase the margin-right for more distance
-        teacherSignature.innerHTML = `<div>Faculty</div>`;
-    
-        // Create the Principal signature
-        const hodSignature = document.createElement('div');
-        hodSignature.style.display = 'inline-block';
-        hodSignature.innerHTML = `<div>HOD</div>`;
-    
-        // Append signatures to the container
-        signaturesContainer.appendChild(teacherSignature);
-        signaturesContainer.appendChild(hodSignature);
-    
-        // Append the signatures container to the body
-        document.body.appendChild(signaturesContainer);
-    
-        // Trigger the print dialog
-        window.print();
-    
-        // Remove the signatures container after printing
-        document.body.removeChild(signaturesContainer);
-    
-        // Restore the hidden elements after printing
-        document.getElementById('entireform').style.display = 'block';
-        document.getElementById('ExcelInput').style.display = 'block';
-        document.getElementById('confirm2').style.display = 'block';
-        document.getElementById('printButton').style.display = 'block';
-      }
-    
-      // Attach the printPage function to the print button
-      document.getElementById('printButton').addEventListener('click', printPage);
-    
-      // Add an event listener to the "Print Page" button to re-invoke the printing process
-      document.getElementById('printButton').addEventListener('click', function () {
-        // Hide the "Print Page" button before printing
-        this.style.display = 'none';
-        printPage();
-      });
-    </script>
-    
-    <!--Print button code-->
   </body>
 </html>
