@@ -732,19 +732,19 @@ function printPage() {
   // Create a container for the signatures
   const signaturesContainer = document.createElement("div");
   signaturesContainer.style.textAlign = "center";
-  signaturesContainer.style.marginTop = "50px";
+  signaturesContainer.style.marginTop = "5cm";
   signaturesContainer.className = "print-only"; // Add a CSS class for printing
 
   // Create the Teacher Incharge signature
   const teacherSignature = document.createElement("div");
   teacherSignature.style.display = "inline-block";
   teacherSignature.style.marginRight = "309px"; // Increase the margin-right for more distance
-  teacherSignature.innerHTML = `<div>Faculty</div>`;
+  teacherSignature.innerHTML = `<div style="border-top: 3px solid #000; width: 80px;">Faculty</div>`; // Add a slightly longer line above "Faculty"
 
   // Create the Principal signature
   const hodSignature = document.createElement("div");
   hodSignature.style.display = "inline-block";
-  hodSignature.innerHTML = `<div>HOD</div>`;
+  hodSignature.innerHTML = `<div style="border-top: 3px solid #000; width: 70px;">HOD</div>`; // Add a slightly longer line above "HOD"
 
   // Append signatures to the container
   signaturesContainer.appendChild(teacherSignature);
