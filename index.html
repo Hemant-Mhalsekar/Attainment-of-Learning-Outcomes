@@ -25,7 +25,7 @@
       <img src="img/LogoHeader.png" alt="DMCLogoHeader" class="w-1/2 mx-auto" />
     </div>
     <div class="flex justify-center items-center my-8">
-      <h1 class="font-bold uppercase text-4xl text-black mb-4">
+      <h1 class="font-bold uppercase text-center text-black mb-4">
         Attainment Of Course & Program Outcome
       </h1>
     </div>
@@ -187,7 +187,7 @@
                       <label>
                         <input
                           type="checkbox"
-                          class="mr-2"
+                          class="mr-2 h-6 w-6"
                           id="rememberingCheckbox"
                           onchange="toggleInput('cell1', 'percentage1', this.checked)"
                         />
@@ -216,7 +216,7 @@
                       <label>
                         <input
                           type="checkbox"
-                          class="mr-2"
+                          class="mr-2 h-6 w-6"
                           id="understandingCheckbox"
                           onchange="toggleInput('cell2', 'percentage2', this.checked)"
                         />
@@ -245,7 +245,7 @@
                       <label>
                         <input
                           type="checkbox"
-                          class="mr-2"
+                          class="mr-2 h-6 w-6"
                           id="applyingCheckbox"
                           onchange="toggleInput('cell3', 'percentage3', this.checked)"
                         />
@@ -274,7 +274,7 @@
                       <label>
                         <input
                           type="checkbox"
-                          class="mr-2"
+                          class="mr-2 h-6 w-6"
                           id="analysingCheckbox"
                           onchange="toggleInput('cell4', 'percentage4', this.checked)"
                         />
@@ -358,7 +358,7 @@
     </div>
 
     <div
-      class="bg-white p-4 mx-4 my-8 shadow-lg rounded-2xl hidden"
+      class="bg-white p-4 mx-4 my-12 shadow-lg rounded-2xl hidden"
       id="gridView2"
     ></div>
 
@@ -404,8 +404,10 @@
       </div>
     </div>
 
-    <div style="width: 50%; height: auto; margin-left: 30px; margin-top: 100px">
-      <canvas id="barGraph" class="shadow-lg p-15 hidden"></canvas>
+    <div id="graphDiv" class="flex justify-center w-full mt-10">
+      <div class="flex justify-center" style="width: 50%; height: auto">
+        <canvas id="barGraph" class="shadow-lg p-15 hidden"></canvas>
+      </div>
     </div>
 
     <!--Table to enter marks of learning outcome ends here-->
