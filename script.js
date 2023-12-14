@@ -355,20 +355,7 @@ function handleFileUpload() {
                     // console.log("Percentage : "+percentage);
                     if (percentageCell) {
                       percentageCell.textContent = percentage.toFixed(2) + "%";
-
-                      if (percentage >= 0 && percentage <= 40) {
-                        percentageCell.className =
-                          "bg-red-200 border border-red-500";
-                      } else if (percentage >= 41 && percentage <= 60) {
-                        percentageCell.className =
-                          "bg-blue-200 border border-blue-500";
-                      } else if (percentage >= 61 && percentage <= 80) {
-                        percentageCell.className =
-                          "bg-yellow-200 border border-yellow-500";
-                      } else if (percentage >= 81 && percentage <= 100) {
-                        percentageCell.className =
-                          "bg-green-200 border border-green-500";
-                      }
+                      percentageCell.className = getPercentageClass(percentage);
                     }
                   }
                 } else {
@@ -471,16 +458,14 @@ function handleFileUpload() {
                   }
 
                   if (enteredValue > storedValue) {
-                    showToast("Enter valid value", 5000);
-                    this.textContent = "";
-                    var percentageCellIndex = currentCol + 1;
-                    var percentageCell =
-                      rows[currentRow].cells[percentageCellIndex];
-
-                    if (percentageCell) {
-                      percentageCell.textContent = "";
-                    }
-                    this.removeAttribute("data-previous-value");
+                    showToast(
+                      "Value " +
+                        enteredValue +
+                        " cannot paste as it is greater than Total marks",
+                      5000
+                    );
+                    currentRow.cells[currentCol].textContent = "";
+                    currentCol++;
                   } else {
                     var colIndex = currentCol;
                     var rowIndex = Array.from(
@@ -520,20 +505,7 @@ function handleFileUpload() {
                     // console.log("Percentage : "+percentage);
                     if (percentageCell) {
                       percentageCell.textContent = percentage.toFixed(2) + "%";
-
-                      if (percentage >= 0 && percentage <= 40) {
-                        percentageCell.className =
-                          "bg-red-200 border border-red-500";
-                      } else if (percentage >= 41 && percentage <= 60) {
-                        percentageCell.className =
-                          "bg-blue-200 border border-blue-500";
-                      } else if (percentage >= 61 && percentage <= 80) {
-                        percentageCell.className =
-                          "bg-yellow-200 border border-yellow-500";
-                      } else if (percentage >= 81 && percentage <= 100) {
-                        percentageCell.className =
-                          "bg-green-200 border border-green-500";
-                      }
+                      percentageCell.className = getPercentageClass(percentage);
                     }
 
                     currentCol++;
@@ -559,6 +531,16 @@ function handleFileUpload() {
       });
   };
   reader.readAsArrayBuffer(file);
+}
+
+function getPercentageClass(percentage) {
+  if (percentage >= 0 && percentage <= 40)
+    return "bg-red-200 border border-red-500";
+  if (percentage >= 41 && percentage <= 60)
+    return "bg-blue-200 border border-blue-500";
+  if (percentage >= 61 && percentage <= 80)
+    return "bg-yellow-200 border border-yellow-500";
+  return "bg-green-200 border border-green-500";
 }
 
 //Function to store all percentage in array
