@@ -38,7 +38,7 @@ function displayFormData() {
     // Get input values directly and display them
     formDataDisplay.innerHTML += `
       <div class="mb-4 p-4 bg-white rounded-lg">
-        <h2 style="font-weight: bold; color: #007bff; font-size: 26px; ;text-decoration: underline; ">Course Information</h2>
+        <h2 class="text-center" style="font-weight: bold; color: #007bff; font-size: 26px; ;text-decoration: underline; ">Course Information</h2>
         <p class="mb-2"><span class="font-bold">Name of Course:</span> ${
           document.getElementById("courseName").value
         }</p>
@@ -194,7 +194,7 @@ function handleFileUpload() {
     var analysingCheckbox = document.getElementById("analysingCheckbox");
 
     // Initialize the HTML string for the table
-    var html = "<table class='w-full'>";
+    var html = "<table class='w-full '>";
 
     // Loop through the rows of JSON data
     for (var i = 0; i < jsonData.length; i++) {
@@ -346,14 +346,6 @@ function handleFileUpload() {
                       trackCount();
                     }
 
-                    console.log(
-                      "percentage " +
-                        percentage +
-                        " Entered value " +
-                        enteredValue +
-                        "Stored value" +
-                        storedValue
-                    );
                     var percentageCellIndex = colIndex + 1;
                     var percentageCell =
                       rows[rowIndex].cells[percentageCellIndex];
@@ -404,12 +396,174 @@ function handleFileUpload() {
         })(i, j); // Pass current values of i and j to the IIFE
       }
     }
+
+    // Handle copy pasted Data
+
+    var selectedCell = null;
+
+    document
+      .getElementById("gridView2")
+      .addEventListener("click", function (e) {
+        var cell = e.target;
+        if (
+          cell.tagName === "TD" &&
+          cell.getAttribute("contenteditable") === "true"
+        ) {
+          selectedCell = cell;
+        }
+      });
+
+    document
+      .getElementById("gridView2")
+      .addEventListener("paste", function (e) {
+        e.preventDefault();
+        if (selectedCell) {
+          var clipboardData = e.clipboardData || window.clipboardData;
+          var pastedData = clipboardData.getData("text/plain");
+          var rows = pastedData.split(/\r?\n/);
+          // Determine the number of rows and columns in the clipboard data
+          var numRows = rows.length;
+          var numCols = 0;
+          for (var i = 0; i < rows.length; i++) {
+            var cols = rows[i].split("\t");
+            numCols = Math.max(numCols, cols.length);
+          }
+
+          var currentRow = selectedCell.parentElement;
+          var currentCol = selectedCell.cellIndex;
+          for (var i = 0; i < numRows; i++) {
+            if (i > 0) {
+              currentRow = currentRow.nextElementSibling;
+              if (!currentRow) {
+                currentRow = currentRow.parentElement.insertRow();
+                currentRow.innerHTML =
+                  "<td class='text-center' contenteditable='true'></td>".repeat(
+                    numCols
+                  );
+              }
+              currentCol = selectedCell.cellIndex;
+            }
+
+            var cols = rows[i].split("\t");
+
+            for (var j = 0; j < cols.length; j++) {
+              currentRow.cells[currentCol].textContent = cols[j];
+              // Calculate percentage and display it in the next column cell
+              var enteredValue = parseFloat(cols[j]);
+              console.log("Entered value " + enteredValue);
+
+              if (!isNaN(enteredValue) || enteredValue === "") {
+                var columnArray = inputValues.slice();
+
+                if (columnArray.length == collength) {
+                  var columnNumber = (currentCol - 3) / 2 + 1;
+
+                  let storedValue = 0;
+
+                  if (columnNumber === 1) {
+                    storedValue = columnArray[0];
+                  } else if (columnNumber === 2) {
+                    storedValue = columnArray[1];
+                  } else if (columnNumber === 3) {
+                    storedValue = columnArray[2];
+                  } else if (columnNumber === 4) {
+                    storedValue = columnArray[3];
+                  }
+
+                  if (enteredValue > storedValue) {
+                    showToast("Enter valid value", 5000);
+                    this.textContent = "";
+                    var percentageCellIndex = currentCol + 1;
+                    var percentageCell =
+                      rows[currentRow].cells[percentageCellIndex];
+
+                    if (percentageCell) {
+                      percentageCell.textContent = "";
+                    }
+                    this.removeAttribute("data-previous-value");
+                  } else {
+                    var colIndex = currentCol;
+                    var rowIndex = Array.from(
+                      currentRow.parentElement.children
+                    ).indexOf(currentRow);
+
+                    console.log(
+                      "ColIndex : " + colIndex + " Row Index " + rowIndex
+                    );
+
+                    var percentage = (enteredValue / storedValue) * 100;
+
+                    if (!isNaN(percentage)) {
+                      // Increment the count based on the percentage range
+
+                      trackPercentage(
+                        colIndex,
+                        rowIndex,
+                        percentage,
+                        columnNumber
+                      );
+                      calculateTotal(
+                        colIndex,
+                        rowIndex,
+                        enteredValue,
+                        columnNumber
+                      );
+                      trackCount();
+                    }
+
+                    var percentageCellIndex = currentCol + 1;
+                    var percentageCell = currentRow.cells[percentageCellIndex];
+
+                    if (percentageCell) {
+                      percentageCell.setAttribute("contenteditable", "false");
+                    }
+                    // console.log("Percentage : "+percentage);
+                    if (percentageCell) {
+                      percentageCell.textContent = percentage.toFixed(2) + "%";
+
+                      if (percentage >= 0 && percentage <= 40) {
+                        percentageCell.className =
+                          "bg-red-200 border border-red-500";
+                      } else if (percentage >= 41 && percentage <= 60) {
+                        percentageCell.className =
+                          "bg-blue-200 border border-blue-500";
+                      } else if (percentage >= 61 && percentage <= 80) {
+                        percentageCell.className =
+                          "bg-yellow-200 border border-yellow-500";
+                      } else if (percentage >= 81 && percentage <= 100) {
+                        percentageCell.className =
+                          "bg-green-200 border border-green-500";
+                      }
+                    }
+
+                    currentCol++;
+                  }
+                } else {
+                  showToast("Please Enter data in 1st table", 5000);
+                  currentRow.cells[currentCol].textContent = "";
+                  // Remove the event listener
+                  document
+                    .getElementById("gridView2")
+                    .removeEventListener("paste");
+                }
+              } else {
+                // Clear both the value cell and the corresponding percentage cell
+                currentRow.cells[currentCol].textContent = "";
+                showToast("cannot paste Non Integer value", 5000);
+              }
+
+              currentCol++;
+            }
+          }
+        }
+      });
   };
   reader.readAsArrayBuffer(file);
 }
 
 //Function to store all percentage in array
 function trackPercentage(colIndex, rowIndex, percentage, columnNumber) {
+  console.log("track percentage rowIndex " + rowIndex);
   var existingIndex = percentageArray[columnNumber - 1].findIndex(
     (item) => item.rowIndex === rowIndex && item.colIndex === colIndex
   );
@@ -725,6 +879,14 @@ document.getElementById("printButton").addEventListener("click", printPage);
 
 // Function to handle the printing
 function printPage() {
+  document.addEventListener("DOMContentLoaded", function () {
+    var graphDiv = document.getElementById("graphDiv");
+    if (graphDiv) {
+      graphDiv.classList.remove("flex", "justify-center", "w-full");
+    } else {
+      console.error("Element with ID 'graphDiv' not found.");
+    }
+  });
   // Hide elements that you want to exclude from printing
   document.getElementById("entireform").style.display = "none";
   document.getElementById("toast").style.display = "none";
