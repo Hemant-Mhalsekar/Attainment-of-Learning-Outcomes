@@ -37,27 +37,27 @@ function displayFormData() {
 
     // Get input values directly and display them
     formDataDisplay.innerHTML += `
-      <div class="mb-4 p-4 bg-white rounded-lg">
-        <h2 class="text-center" style="font-weight: bold; color: #007bff; font-size: 26px; ;text-decoration: underline; ">Course Information</h2>
-        <p class="mb-2"><span class="font-bold">Name of Course:</span> ${
-          document.getElementById("courseName").value
-        }</p>
-        <p class="mb-2"><span class="font-bold">Name of category:</span> ${
-          document.getElementById("category").value
-        }</p>
-        <p class="mb-2"><span class="font-bold">Name of the Course Teacher:</span> ${
-          document.getElementById("courseTeacher").value
-        }</p>
-        <p class="mb-2"><span class="font-bold">Name of the class:</span> ${
-          document.getElementById("className").value
-        }</p>
-        <p class="mb-2"><span class="font-bold">Number of Students:</span> ${
-          document.getElementById("totalStudents").value
-        }</p>
-        <p class="mb-2"><span class="font-bold">Total Marks:</span> ${
-          document.getElementById("targetPercentage").value
-        }</p>
-      </div>`;
+    <div class="mb-4 p-4 bg-white rounded-lg">
+      <h2 class="text-center" style="font-weight: bold; color: #007bff; font-size: 26px; ;text-decoration: underline; ">Course Information</h2>
+      <p class="mb-2"><span class="font-bold">Name of Course:</span> ${
+        document.getElementById("courseName").value
+      }</p>
+      <p class="mb-2"><span class="font-bold">Name of category:</span> ${
+        document.getElementById("category").value
+      }</p>
+      <p class="mb-2"><span class="font-bold">Name of the Course Teacher:</span> ${
+        document.getElementById("courseTeacher").value
+      }</p>
+      <p class="mb-2"><span class="font-bold">Name of the class:</span> ${
+        document.getElementById("className").value
+      }</p>
+      <p class="mb-2"><span class="font-bold">Number of Students:</span> ${
+        document.getElementById("totalStudents").value
+      }</p>
+      <p class="mb-2"><span class="font-bold">Total Marks:</span> ${
+        document.getElementById("targetPercentage").value
+      }</p>
+    </div>`;
 
     // Show the form data display
     formDataDisplay.style.display = "block";
@@ -242,7 +242,7 @@ function handleFileUpload() {
 
           if (analysingCheckbox.checked) {
             html +=
-              "<th class='text-center h-10 bg-blue-500'>Analyse/Evaluate</th><th class='text-center h-10 bg-blue-500'>%</th>";
+              "<th class='text-center h-10 bg-blue-500'>Analyze/Evaluate</th><th class='text-center h-10 bg-blue-500'>%</th>";
             col++;
           }
 
@@ -707,7 +707,7 @@ function calculateColumnWiseAverage() {
     labels.push("Application");
   }
   if (analysingCheckbox.checked) {
-    labels.push("Analyse/Evaluate");
+    labels.push("Analyze/Evaluate");
   }
 
   generateBarGraph(columnAverages, labels);
@@ -799,7 +799,7 @@ function generateBarGraph(columnAverages, labels) {
       labels: labels,
       datasets: [
         {
-          label: "Percentage Average",
+          label: "Average Percentage",
           data: columnAverages,
           backgroundColor: [
             "rgba(255, 99, 132, 0.5)",
@@ -823,7 +823,7 @@ function generateBarGraph(columnAverages, labels) {
           beginAtZero: true,
           title: {
             display: true,
-            text: "Percentage Average",
+            text: "Average Percentage ",
           },
         },
       },
